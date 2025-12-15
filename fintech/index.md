@@ -2,24 +2,47 @@
 
 layout: default
 title: Fintech Domain Knowledge
-description: Practical fintech systems explained for engineers
---------------------------------------------------------------
+description: A practical, engineering-first guide to real-world fintech systems
+-------------------------------------------------------------------------------
 
 ← [Home](../index.html)
 
 # Fintech Domain Knowledge
 
-This section contains long-form, engineering-first articles on how real fintech systems work in production — payments, banking cores, compliance, fraud, and distributed architectures.
+## 👋 Introduction
 
-The goal is to build **deep domain expertise**, not surface-level integration knowledge.
+This section is a **long-form, engineering-first knowledge base** on how real fintech systems are designed, built, and operated in production.
+
+It is written for:
+
+* Senior software engineers
+* Tech leads and architects
+* Engineers working in or moving into fintech
+
+The focus is **not** on SDK usage or surface-level integrations. Instead, this series explains the *foundations* of fintech systems — money movement, ledgers, compliance, risk, and architecture — in a way that helps engineers make **better design decisions**.
 
 ---
 
-## 📘 Articles
+## 🎯 How to Use This Series
+
+You do not need to read everything in order, but the articles are structured progressively:
+
+1. Start with **Payments** to understand how money enters and leaves systems
+2. Move to **Core Banking** to understand how money is recorded and protected
+3. Learn **Compliance & Fraud** to understand constraints and risks
+4. Study **Architecture** to see how systems scale safely
+5. Explore **Products & Analytics** to connect engineering with business reality
+6. Finish with **Global Platforms** to internalize real-world trade-offs
+
+Each article can be revisited independently as a reference.
+
+---
+
+## 📘 Articles Overview
 
 ### 1. Payment Systems in Fintech
 
-A complete, in-depth guide covering authorization, settlement, card networks, wallets, compliance, and real operational realities.
+A deep, end-to-end explanation of authorization, settlement, card networks, wallets, chargebacks, and operational realities.
 
 👉 **[Read article →](payment-systems.html)**
 
@@ -27,7 +50,7 @@ A complete, in-depth guide covering authorization, settlement, card networks, wa
 
 ### 2. Core Banking Systems
 
-An engineer’s guide to how banks actually work — ledgers, double-entry accounting, balances, reversals, interest calculation, RTGS, ACH, and virtual accounts.
+How banks actually work internally — ledgers, double-entry accounting, balances, reversals, interest calculation, RTGS, ACH, and virtual accounts.
 
 👉 **[Read article →](core-banking.html)**
 
@@ -35,7 +58,7 @@ An engineer’s guide to how banks actually work — ledgers, double-entry accou
 
 ### 3. Compliance & Regulation in Fintech
 
-A practical explanation of KYC, AML, PCI-DSS, audits, access control, and why compliance is fundamentally an engineering concern.
+An engineering-centric view of KYC, AML, PCI-DSS, audit trails, access control, and why compliance must be built into system design.
 
 👉 **[Read article →](compliance-regulation.html)**
 
@@ -43,7 +66,7 @@ A practical explanation of KYC, AML, PCI-DSS, audits, access control, and why co
 
 ### 4. Fraud & Risk Engines
 
-A deep dive into rule-based systems, risk scoring, velocity checks, device fingerprinting, ML boundaries, human review, and fraud operations.
+A detailed exploration of rule engines, risk scoring, velocity checks, device fingerprinting, ML boundaries, and human-in-the-loop operations.
 
 👉 **[Read article →](fraud-risk.html)**
 
@@ -51,7 +74,7 @@ A deep dive into rule-based systems, risk scoring, velocity checks, device finge
 
 ### 5. Fintech Architecture & Distributed Financial Systems
 
-How large-scale fintech platforms are designed — ledgers as truth, event-driven systems, sagas, idempotency, reconciliation, and operational safety.
+Why fintech architecture is different — ledgers as truth, event-driven systems, idempotency, sagas, reconciliation, and operational safety.
 
 👉 **[Read article →](architecture-distributed-systems.html)**
 
@@ -59,26 +82,32 @@ How large-scale fintech platforms are designed — ledgers as truth, event-drive
 
 ### 6. Financial Products & Instruments
 
-How fintech products actually work under the hood — loans, BNPL, installments, credit cards, FX, remittance flows, treasury, and liquidity management, explained for engineers.
+An engineer’s guide to loans, BNPL, installments, cards, FX, remittances, treasury, and liquidity management.
 
-👉 **[Financial Products & Instruments](financial-products.html)**
+👉 **[Read article →](financial-products.html)**
 
 ---
 
 ### 7. Fintech Analytics & KPIs
 
-Understanding the metrics that define fintech success — authorization rate, fraud rate, chargebacks, settlement accuracy, reconciliation gaps, cost of payments, and merchant lifetime value.
+Metrics that actually matter — authorization rate, fraud rate, chargebacks, settlement accuracy, reconciliation gaps, and cost of payments.
 
-👉 **[Fintech Analytics & KPIs](analytics-kpis.html)**
+👉 **[Read article →](analytics-kpis.html)**
 
 ---
 
 ### 8. Studying Global Fintech Platforms
 
-Reverse-engineering how leading platforms like Stripe, Adyen, PayPal, Wise, Revolut, and M-Pesa design their APIs, ledgers, risk systems, and operational tooling.
+Reverse engineering Stripe, Adyen, PayPal, Wise, Revolut, and M-Pesa to understand why mature fintech systems look the way they do.
 
-👉 **[Studying Global Fintech Platforms](global-platforms.html)**
+👉 **[Read article →](global-platforms.html)**
 
 ---
+
+## 🧭 Final Note
+
+This knowledge base is intentionally conservative in tone and design. Financial systems demand **correctness, clarity, and discipline** over novelty.
+
+If you are building or leading fintech systems, these principles will help you avoid costly mistakes and design platforms that can survive scale, audits, and time.
 
 *Last updated: Dec 2025*
