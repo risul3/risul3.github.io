@@ -4,14 +4,7 @@ title: Payment Systems in Fintech
 description: A complete, in-depth guide for engineers and tech leads
 ---
 
-# Payment Systems in Fintech
-
-_Last updated: Dec 2025_
-
 ← [Home](../index.md)
-
-...
-
 
 # Payment Systems in Fintech
 
