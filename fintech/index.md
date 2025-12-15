@@ -12,7 +12,7 @@ This section is a **long-form, engineering-first knowledge base** on how real fi
 
 It is written for:
 
-* Senior software engineers
+* Software engineers
 * Tech leads and architects
 * Engineers working in or moving into fintech
 

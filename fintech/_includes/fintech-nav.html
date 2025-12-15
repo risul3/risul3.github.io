@@ -1,0 +1,25 @@
+{% assign pages = site.data.fintech %}
+
+{% for item in pages %}
+  {% if page.url == item.url %}
+    {% assign index = forloop.index0 %}
+  {% endif %}
+{% endfor %}
+
+<hr />
+
+<nav style="display:flex; justify-content:space-between; font-size:0.9em;">
+  <div>
+    {% if index > 0 %}
+      {% assign prev = pages[index | minus: 1] %}
+      ← <a href="{{ prev.url }}">{{ prev.title }}</a>
+    {% endif %}
+  </div>
+
+  <div>
+    {% if index < pages.size | minus: 1 %}
+      {% assign next = pages[index | plus: 1] %}
+      <a href="{{ next.url }}">{{ next.title }}</a> →
+    {% endif %}
+  </div>
+</nav>
