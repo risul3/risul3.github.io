@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Payment Systems in Fintech
+description: A complete, in-depth guide for engineers and tech leads
 ---
 
 # Payment Systems in Fintech
