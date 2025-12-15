@@ -1,8 +1,9 @@
 {% assign pages = site.data.fintech %}
+{% assign current = page.url | append: "/" | replace: "//", "/" %}
 {% assign index = nil %}
 
 {% for item in pages %}
-  {% if page.url == item.url %}
+  {% if current == item.url %}
     {% assign index = forloop.index0 %}
   {% endif %}
 {% endfor %}
