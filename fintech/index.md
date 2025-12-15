@@ -23,7 +23,7 @@ The focus is **not** on SDK usage or surface-level integrations. Instead, this s
 
 ---
 
-## 🎯 How to Use This Series
+
 
 You do not need to read everything in order, but the articles are structured progressively:
 
