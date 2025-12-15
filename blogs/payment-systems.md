@@ -1,4 +1,16 @@
+---
+layout: default
+title: Payment Systems in Fintech
+---
+
+# Payment Systems in Fintech
+
+_Last updated: Dec 2025_
+
 ← [Home](../index.md)
+
+...
+
 
 # Payment Systems in Fintech
 
