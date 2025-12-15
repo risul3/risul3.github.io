@@ -6,8 +6,6 @@ description: A complete, in-depth guide for engineers and tech leads
 
 ← [Home](../index.md)
 
-# Payment Systems in Fintech
-
 _Last updated: Dec 2025_
 
 
