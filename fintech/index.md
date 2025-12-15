@@ -7,7 +7,7 @@ description: A practical, engineering-first guide to real-world fintech systems
 
 ← [Home](../index.html)
 
-## Fintech Domain Knowledge
+### Fintech Domain Knowledge
 
 ## 👋 Introduction
 
