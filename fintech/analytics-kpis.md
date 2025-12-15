@@ -1,12 +1,12 @@
-# Fintech Analytics & KPIs: Measuring What Actually Matters
-
+---
+layout: fintech
+title: Fintech Analytics & KPIs: Measuring What Actually Matters
+description: A complete, in-depth guide for engineers and tech leads
 ---
 
-## layout: default
+← [Fintech Home](index.html)
 
 *Last updated: Dec 2025*
-
-← [Fintech Home](index.html)
 
 ---
 

@@ -1,12 +1,12 @@
-# Financial Products & Instruments in Fintech: An Engineer’s Deep Dive
-
+---
+layout: fintech
+title: Financial Products & Instruments in Fintech: An Engineer’s Deep Dive
+description: Payment Systems in Fintech
 ---
 
-## layout: default
-
-*Last updated: Dec 2025*
-
 ← [Fintech Home](index.html)
+
+_Last updated: Dec 2025_
 
 ---
 

@@ -1,12 +1,12 @@
-# Studying Global Fintech Platforms: Reverse Engineering How the Best Really Work
-
+---
+layout: fintech
+title: Studying Global Fintech Platforms: Reverse Engineering How the Best Really Work
+description: Payment Systems in Fintech
 ---
 
-## layout: default
-
-*Last updated: Dec 2025*
-
 ← [Fintech Home](index.html)
+
+_Last updated: Dec 2025_
 
 ---
 

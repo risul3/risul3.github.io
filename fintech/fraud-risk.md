@@ -1,12 +1,12 @@
-# Fraud & Risk Engines in Fintech: Designing Systems That Protect Money
-
+---
+layout: fintech
+title: Fraud & Risk Engines in Fintech: Designing Systems That Protect Money
+description: Payment Systems in Fintech
 ---
 
-## layout: default
-
-*Last updated: Dec 2025*
-
 ← [Fintech Home](index.html)
+
+_Last updated: Dec 2025_
 
 ---
 

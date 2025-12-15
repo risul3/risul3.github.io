@@ -1,23 +1,12 @@
 ---
-layout: default
-title: Payment Systems in Fintech
-description: A complete, in-depth guide for engineers and tech leads
+layout: fintech
+title: Core Banking Systems: How Banks Actually Work (An Engineer’s Guide)
+description: Payment Systems in Fintech
 ---
 
 ← [Fintech Home](index.html)
 
 _Last updated: Dec 2025_
-
-
-# Core Banking Systems: How Banks Actually Work (An Engineer’s Guide)
-
----
-
-## layout: default
-
-*Last updated: Dec 2025*
-
-← [Fintech Home](index.html)
 
 ---
 

@@ -1,12 +1,12 @@
-# Fintech Architecture & Distributed Financial Systems: Designing for Money, Scale, and Trust
-
+---
+layout: fintech
+title: Fintech Architecture & Distributed Financial Systems: Designing for Money, Scale, and Trust
+description: A complete, in-depth guide for engineers and tech leads
 ---
 
-## layout: default
+← [Fintech Home](index.html)
 
 *Last updated: Dec 2025*
-
-← [Fintech Home](index.html)
 
 ---
 

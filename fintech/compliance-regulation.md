@@ -1,12 +1,12 @@
-# Compliance & Regulation in Fintech: What Engineers Must Understand
-
+---
+layout: fintech
+title: Compliance & Regulation in Fintech: What Engineers Must Understand
+description: A complete, in-depth guide for engineers and tech leads
 ---
 
-## layout: default
+← [Fintech Home](index.html)
 
 *Last updated: Dec 2025*
-
-← [Fintech Home](index.html)
 
 ---
 
