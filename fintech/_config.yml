@@ -1,6 +1,0 @@
-defaults:
-  - scope:
-      path: "fintech"
-      type: "pages"
-    values:
-      layout: fintech
