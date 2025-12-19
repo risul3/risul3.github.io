@@ -1,5 +1,5 @@
 ---
-layout: fintech
+layout: article
 title: Fraud & Risk Engines in Fintech: Designing Systems That Protect Money
 description: Payment Systems in Fintech
 ---

@@ -1,5 +1,5 @@
 ---
-layout: fintech
+layout: article
 title: Core Banking Systems: How Banks Actually Work (An Engineer’s Guide)
 description: Payment Systems in Fintech
 ---

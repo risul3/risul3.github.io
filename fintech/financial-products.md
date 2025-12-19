@@ -1,5 +1,5 @@
 ---
-layout: fintech
+layout: article
 title: Financial Products & Instruments in Fintech: An Engineer’s Deep Dive
 description: Payment Systems in Fintech
 ---

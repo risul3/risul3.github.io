@@ -1,22 +1,20 @@
 (async function () {
-  const navContainer = document.getElementById("sibling-nav");
-  if (!navContainer) return;
+  const container = document.getElementById("sibling-nav");
+  if (!container) return;
 
   try {
-    // Fetch the section index page
-    const response = await fetch("./index.html");
-    if (!response.ok) return;
+    const res = await fetch("./index.html");
+    if (!res.ok) return;
 
-    const html = await response.text();
+    const html = await res.text();
     const doc = new DOMParser().parseFromString(html, "text/html");
 
-    // Find links under the Contents section
-    const contentsHeader = [...doc.querySelectorAll("h2, h3")]
+    const header = [...doc.querySelectorAll("h2, h3")]
       .find(h => h.textContent.trim().toLowerCase() === "contents");
 
-    if (!contentsHeader) return;
+    if (!header) return;
 
-    let list = contentsHeader.nextElementSibling;
+    const list = header.nextElementSibling;
     if (!list || list.tagName !== "UL") return;
 
     const links = [...list.querySelectorAll("a")]
@@ -32,18 +30,29 @@
     const prev = links[index - 1];
     const next = links[index + 1];
 
-    navContainer.innerHTML = `
-      <hr />
+    container.innerHTML = `
       <nav class="sibling-nav">
-        <div>
-          ${prev ? `← <a href="${prev.href}">${prev.text}</a>` : ""}
-        </div>
-        <div>
-          ${next ? `<a href="${next.href}">${next.text}</a> →` : ""}
-        </div>
+        <div>${prev ? `← <a href="${prev.href}">${prev.text}</a>` : ""}</div>
+        <div>${next ? `<a href="${next.href}">${next.text}</a> →` : ""}</div>
       </nav>
     `;
-  } catch (e) {
-    // Fail silently — content must still work without JS
+  } catch (_) {
+    // Fail silently
   }
+})();
+
+(function () {
+  const el = document.getElementById("breadcrumbs");
+  if (!el) return;
+
+  const parts = location.pathname.split("/").filter(Boolean);
+  if (parts.length < 2) return;
+
+  let path = "/";
+  const crumbs = parts.slice(0, -1).map(p => {
+    path += p + "/";
+    return `<a href="${path}">${p}</a>`;
+  });
+
+  el.innerHTML = `Home → ${crumbs.join(" → ")}`;
 })();

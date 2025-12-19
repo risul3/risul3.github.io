@@ -1,0 +1,6 @@
+.sibling-nav {
+  display: flex;
+  justify-content: space-between;
+  margin: 2.5rem 0;
+  font-size: 0.9em;
+}

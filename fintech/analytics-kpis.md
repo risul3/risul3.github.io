@@ -1,5 +1,5 @@
 ---
-layout: fintech
+layout: article
 title: Fintech Analytics & KPIs: Measuring What Actually Matters
 description: A complete, in-depth guide for engineers and tech leads
 ---
