@@ -3,75 +3,46 @@
   if (!container) return;
 
   try {
-    // Resolve section index path
     const parts = location.pathname.split("/").filter(Boolean);
-    parts.pop(); // remove current page
-    const sectionIndex = "/" + parts.join("/") + "/index.html";
+    parts.pop();
+    const indexUrl = "/" + parts.join("/") + "/index.html";
 
-    const res = await fetch(sectionIndex);
+    const res = await fetch(indexUrl);
     if (!res.ok) return;
 
-    const html = await res.text();
-    const doc = new DOMParser().parseFromString(html, "text/html");
+    const doc = new DOMParser().parseFromString(await res.text(), "text/html");
 
-    // 1️⃣ Find the "Articles Overview" heading
-    const heading = [...doc.querySelectorAll("h2, h3")]
-      .find(h =>
-        h.textContent.toLowerCase().includes("articles")
-      );
+    const links = [...doc.querySelectorAll("a[href$='.html']")]
+      .filter(a => !a.getAttribute("href").includes("index.html"))
+      .map(a => ({
+        href: a.getAttribute("href"),
+        text: a.textContent.replace(/[→←]/g, "").trim()
+      }));
 
-    if (!heading) return;
-
-    // 2️⃣ Collect links UNTIL next heading of same level
-    const links = [];
-    let el = heading.nextElementSibling;
-
-    while (el && !/^H[23]$/.test(el.tagName)) {
-      if (el.tagName === "P") {
-        const a = el.querySelector("a[href$='.html']");
-        if (a) {
-          links.push({
-            href: a.getAttribute("href"),
-            text: a.textContent.replace("→", "").trim()
-          });
-        }
-      }
-      el = el.nextElementSibling;
-    }
-
-    if (links.length < 2) return;
-
-    // 3️⃣ Normalize current page name
     const current = location.pathname
       .split("/")
       .filter(Boolean)
       .pop()
       .replace(".html", "");
 
-    const index = links.findIndex(l =>
+    const idx = links.findIndex(l =>
       l.href.replace(".html", "") === current
     );
 
-    if (index === -1) return;
+    if (idx === -1) return;
 
-    const prev = links[index - 1];
-    const next = links[index + 1];
+    const prev = links[idx - 1];
+    const next = links[idx + 1];
 
-    // 4️⃣ Render navigation
     container.innerHTML = `
       <nav class="sibling-nav">
-        <div>
-          ${prev ? `← <a href="${prev.href}">${prev.text}</a>` : ""}
-        </div>
-        <div>
-          ${next ? `<a href="${next.href}">${next.text}</a> →` : ""}
-        </div>
+        <div>${prev ? `← <a href="${prev.href}">${prev.text}</a>` : ""}</div>
+        <div>${next ? `<a href="${next.href}">${next.text}</a> →` : ""}</div>
       </nav>
     `;
-  } catch (e) {
-    // Fail silently
-  }
+  } catch (_) {}
 })();
+
 
 
 (function () {
