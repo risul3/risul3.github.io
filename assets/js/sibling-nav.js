@@ -3,14 +3,22 @@
   if (!container) return;
 
   try {
-    // Always load the section index
-    const res = await fetch("./index.html");
+    // Determine section path safely
+    const parts = location.pathname.split("/").filter(Boolean);
+
+    // Remove current page (file or directory)
+    parts.pop();
+
+    // Build section index URL
+    const sectionIndex = "/" + parts.join("/") + "/index.html";
+
+    const res = await fetch(sectionIndex);
     if (!res.ok) return;
 
     const html = await res.text();
     const doc = new DOMParser().parseFromString(html, "text/html");
 
-    // Collect article links from index page
+    // Collect all article links from the index page
     const links = [...doc.querySelectorAll("a")]
       .map(a => a.getAttribute("href"))
       .filter(href =>
@@ -19,22 +27,20 @@
         href !== "index.html"
       );
 
-    if (links.length === 0) return;
+    if (!links.length) return;
 
-    // Normalize current page name safely
-    const segments = location.pathname
+    // Normalize current page name
+    const current = location.pathname
       .split("/")
-      .filter(Boolean); // removes empty segments
+      .filter(Boolean)
+      .pop()
+      .replace(".html", "");
 
-    let current = segments[segments.length - 1] || "";
-    current = current.replace(".html", "");
-
-    // Normalize links
-    const normalizedLinks = links.map(href =>
+    const normalized = links.map(href =>
       href.replace(".html", "")
     );
 
-    const index = normalizedLinks.indexOf(current);
+    const index = normalized.indexOf(current);
     if (index === -1) return;
 
     const prev = links[index - 1];
@@ -54,6 +60,7 @@
     // Fail silently
   }
 })();
+
 
 
 (function () {
