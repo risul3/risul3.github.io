@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: section
 title: Fintech Domain Knowledge
 description: A practical, engineering-first guide to real-world fintech systems
 ---
