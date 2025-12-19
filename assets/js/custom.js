@@ -3,14 +3,13 @@
   if (!container) return;
 
   try {
-    // Determine section path (e.g. /fintech/)
-    const parts = location.pathname.split("/").filter(Boolean);
-    const section = "/" + parts[0] + "/";
+    // Example: /fintech/payment-systems.html
+    const path = window.location.pathname;
 
-    // Fetch section index
-    const indexUrl = section + "index.html";
+    // Section index: /fintech/index.html
+    const sectionIndex = path.replace(/[^/]+$/, "index.html");
 
-    fetch(indexUrl)
+    fetch(sectionIndex)
       .then(res => {
         if (!res.ok) throw new Error("Index not found");
         return res.text();
@@ -18,31 +17,30 @@
       .then(html => {
         const doc = new DOMParser().parseFromString(html, "text/html");
 
-        // Collect links inside this section only
+        // Collect article links from index page
         const links = [...doc.querySelectorAll("a")]
           .map(a => a.getAttribute("href"))
           .filter(href =>
             href &&
-            href.startsWith(section) &&
-            href !== section &&
-            !href.endsWith("/index/")
+            href.endsWith(".html") &&
+            href !== "index.html"
           );
 
         if (links.length < 2) return;
 
-        const current = location.pathname.replace(/\/$/, "");
+        const current = path.split("/").pop();
 
         const items = links
-          .filter(href => href.replace(/\/$/, "") !== current)
+          .filter(href => href !== current)
           .map(href => {
             const title = href
-              .split("/")
-              .filter(Boolean)
-              .pop()
+              .replace(".html", "")
               .replace(/-/g, " ");
             return `<li><a href="${href}">${title}</a></li>`;
           })
           .join("");
+
+        if (!items) return;
 
         container.innerHTML = `
           <section class="sibling-list">
