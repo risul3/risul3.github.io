@@ -1,62 +1,62 @@
-(async function () {
+(function () {
   const container = document.getElementById("sibling-list");
   if (!container) return;
 
   try {
-    // 1️⃣ Determine section index path robustly
-    const parts = location.pathname.split("/").filter(Boolean);
-
-    // Remove current page (file or directory)
-    parts.pop();
-
-    // Build absolute section index URL
-    const indexUrl = "/" + parts.join("/") + "/index.html";
-
-    const res = await fetch(indexUrl);
-    if (!res.ok) return;
-
-    const doc = new DOMParser().parseFromString(
-      await res.text(),
-      "text/html"
-    );
-
-    // 2️⃣ Collect article links from index page
-    const links = [...doc.querySelectorAll("a[href$='.html']")]
-      .filter(a => !a.getAttribute("href").includes("index.html"))
-      .map(a => ({
-        href: a.getAttribute("href"),
-        text: a.textContent.replace(/[→←]/g, "").trim()
-      }));
-
-    if (links.length < 2) return;
-
-    // 3️⃣ Normalize current page name
-    const current = location.pathname
+    // Current URL parts
+    const pathParts = window.location.pathname
       .split("/")
-      .filter(Boolean)
-      .pop()
-      .replace(".html", "");
+      .filter(Boolean);
 
-    // 4️⃣ Exclude current page from list
-    const items = links
-      .filter(l => l.href.replace(".html", "") !== current)
-      .map(l => `<li><a href="${l.href}">${l.text}</a></li>`)
-      .join("");
+    // Remove current page (e.g. payment-systems.html)
+    pathParts.pop();
 
-    if (!items) return;
+    // Build section index URL (e.g. /fintech/index.html)
+    const indexUrl = "/" + pathParts.join("/") + "/index.html";
 
-    // 5️⃣ Render sibling list
-    container.innerHTML = `
-      <section class="sibling-list">
-        <h3>Other articles in this section</h3>
-        <ul>
-          ${items}
-        </ul>
-      </section>
-    `;
-  } catch (_) {
-    // Fail silently
-  }
+    fetch(indexUrl)
+      .then(res => {
+        if (!res.ok) throw new Error("Index not found");
+        return res.text();
+      })
+      .then(html => {
+        const doc = new DOMParser().parseFromString(html, "text/html");
+
+        // Collect ONLY article links (your files)
+        const links = [...doc.querySelectorAll("a")]
+          .map(a => a.getAttribute("href"))
+          .filter(href =>
+            href &&
+            href.endsWith(".html") &&
+            href !== "index.html"
+          );
+
+        if (links.length < 2) return;
+
+        const current = window.location.pathname
+          .split("/")
+          .filter(Boolean)
+          .pop()
+          .replace(".html", "");
+
+        const items = links
+          .filter(h => h.replace(".html", "") !== current)
+          .map(h => `<li><a href="${h}">${h.replace(".html", "").replace(/-/g, " ")}</a></li>`)
+          .join("");
+
+        if (!items) return;
+
+        container.innerHTML = `
+          <section class="sibling-list">
+            <h3>Other articles in this section</h3>
+            <ul>
+              ${items}
+            </ul>
+          </section>
+        `;
+      })
+      .catch(() => {});
+  } catch (_) {}
 })();
 
 
