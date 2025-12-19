@@ -37,67 +37,51 @@ Each article can be revisited independently as a reference.
 
 ## 📘 Articles Overview
 
-### 1. Payment Systems in Fintech
+### 1. [Payment Systems in Fintech](payment-systems.html)
 
 A deep, end-to-end explanation of authorization, settlement, card networks, wallets, chargebacks, and operational realities.
 
-👉 **[Read article →](payment-systems.html)**
-
 ---
 
-### 2. Core Banking Systems
+### 2. [Core Banking Systems](core-banking.html)
 
 How banks actually work internally — ledgers, double-entry accounting, balances, reversals, interest calculation, RTGS, ACH, and virtual accounts.
 
-👉 **[Read article →](core-banking.html)**
-
 ---
 
-### 3. Compliance & Regulation in Fintech
+### 3. [Compliance & Regulation in Fintech](compliance-regulation.html)
 
 An engineering-centric view of KYC, AML, PCI-DSS, audit trails, access control, and why compliance must be built into system design.
 
-👉 **[Read article →](compliance-regulation.html)**
-
 ---
 
-### 4. Fraud & Risk Engines
+### 4. [Fraud & Risk Engines](fraud-risk.html)
 
 A detailed exploration of rule engines, risk scoring, velocity checks, device fingerprinting, ML boundaries, and human-in-the-loop operations.
 
-👉 **[Read article →](fraud-risk.html)**
-
 ---
 
-### 5. Fintech Architecture & Distributed Financial Systems
+### 5. [Fintech Architecture & Distributed Financial Systems](architecture-distributed-systems.html)
 
 Why fintech architecture is different — ledgers as truth, event-driven systems, idempotency, sagas, reconciliation, and operational safety.
 
-👉 **[Read article →](architecture-distributed-systems.html)**
-
 ---
 
-### 6. Financial Products & Instruments
+### 6. [Financial Products & Instruments](financial-products.html)
 
 An engineer’s guide to loans, BNPL, installments, cards, FX, remittances, treasury, and liquidity management.
 
-👉 **[Read article →](financial-products.html)**
-
 ---
 
-### 7. Fintech Analytics & KPIs
+### 7. [Fintech Analytics & KPIs](analytics-kpis.html)
 
 Metrics that actually matter — authorization rate, fraud rate, chargebacks, settlement accuracy, reconciliation gaps, and cost of payments.
 
-👉 **[Read article →](analytics-kpis.html)**
-
 ---
 
-### 8. Studying Global Fintech Platforms
+### 8. [Studying Global Fintech Platforms](global-platforms.html)
 
 Reverse engineering Stripe, Adyen, PayPal, Wise, Revolut, and M-Pesa to understand why mature fintech systems look the way they do.
-
-👉 **[Read article →](global-platforms.html)**
 
 ---
 
