@@ -3,16 +3,12 @@
   if (!container) return;
 
   try {
-    // Current URL parts
-    const pathParts = window.location.pathname
-      .split("/")
-      .filter(Boolean);
+    // Determine section path (e.g. /fintech/)
+    const parts = location.pathname.split("/").filter(Boolean);
+    const section = "/" + parts[0] + "/";
 
-    // Remove current page (e.g. payment-systems.html)
-    pathParts.pop();
-
-    // Build section index URL (e.g. /fintech/index.html)
-    const indexUrl = "/" + pathParts.join("/") + "/index.html";
+    // Fetch section index
+    const indexUrl = section + "index.html";
 
     fetch(indexUrl)
       .then(res => {
@@ -22,29 +18,31 @@
       .then(html => {
         const doc = new DOMParser().parseFromString(html, "text/html");
 
-        // Collect ONLY article links (your files)
+        // Collect links inside this section only
         const links = [...doc.querySelectorAll("a")]
           .map(a => a.getAttribute("href"))
           .filter(href =>
             href &&
-            href.endsWith(".html") &&
-            href !== "index.html"
+            href.startsWith(section) &&
+            href !== section &&
+            !href.endsWith("/index/")
           );
 
         if (links.length < 2) return;
 
-        const current = window.location.pathname
-          .split("/")
-          .filter(Boolean)
-          .pop()
-          .replace(".html", "");
+        const current = location.pathname.replace(/\/$/, "");
 
         const items = links
-          .filter(h => h.replace(".html", "") !== current)
-          .map(h => `<li><a href="${h}">${h.replace(".html", "").replace(/-/g, " ")}</a></li>`)
+          .filter(href => href.replace(/\/$/, "") !== current)
+          .map(href => {
+            const title = href
+              .split("/")
+              .filter(Boolean)
+              .pop()
+              .replace(/-/g, " ");
+            return `<li><a href="${href}">${title}</a></li>`;
+          })
           .join("");
-
-        if (!items) return;
 
         container.innerHTML = `
           <section class="sibling-list">
@@ -58,7 +56,6 @@
       .catch(() => {});
   } catch (_) {}
 })();
-
 
 
 (function () {
