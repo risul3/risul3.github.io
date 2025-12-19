@@ -1,17 +1,22 @@
 (async function () {
-  const container = document.getElementById("sibling-nav");
+  const container = document.getElementById("sibling-list");
   if (!container) return;
 
   try {
+    // Determine section index path
     const parts = location.pathname.split("/").filter(Boolean);
-    parts.pop();
+    parts.pop(); // remove current page
     const indexUrl = "/" + parts.join("/") + "/index.html";
 
     const res = await fetch(indexUrl);
     if (!res.ok) return;
 
-    const doc = new DOMParser().parseFromString(await res.text(), "text/html");
+    const doc = new DOMParser().parseFromString(
+      await res.text(),
+      "text/html"
+    );
 
+    // Collect all article links from index page
     const links = [...doc.querySelectorAll("a[href$='.html']")]
       .filter(a => !a.getAttribute("href").includes("index.html"))
       .map(a => ({
@@ -19,30 +24,31 @@
         text: a.textContent.replace(/[→←]/g, "").trim()
       }));
 
+    if (links.length < 2) return;
+
     const current = location.pathname
       .split("/")
       .filter(Boolean)
       .pop()
       .replace(".html", "");
 
-    const idx = links.findIndex(l =>
-      l.href.replace(".html", "") === current
-    );
-
-    if (idx === -1) return;
-
-    const prev = links[idx - 1];
-    const next = links[idx + 1];
+    const items = links
+      .filter(l => l.href.replace(".html", "") !== current)
+      .map(l => `<li><a href="${l.href}">${l.text}</a></li>`)
+      .join("");
 
     container.innerHTML = `
-      <nav class="sibling-nav">
-        <div>${prev ? `← <a href="${prev.href}">${prev.text}</a>` : ""}</div>
-        <div>${next ? `<a href="${next.href}">${next.text}</a> →` : ""}</div>
-      </nav>
+      <section class="sibling-list">
+        <h3>Other articles in this section</h3>
+        <ul>
+          ${items}
+        </ul>
+      </section>
     `;
-  } catch (_) {}
+  } catch (_) {
+    // fail silently
+  }
 })();
-
 
 
 (function () {
