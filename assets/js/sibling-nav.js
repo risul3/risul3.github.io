@@ -3,29 +3,38 @@
   if (!container) return;
 
   try {
-    // Load section index
+    // Always load the section index
     const res = await fetch("./index.html");
     if (!res.ok) return;
 
     const html = await res.text();
     const doc = new DOMParser().parseFromString(html, "text/html");
 
-    // Collect all article links (relative .html links, excluding index)
+    // Collect article links from index page
     const links = [...doc.querySelectorAll("a")]
-      .map(a => ({
-        href: a.getAttribute("href"),
-        text: a.textContent.trim()
-      }))
-      .filter(l =>
-        l.href &&
-        l.href.endsWith(".html") &&
-        l.href !== "index.html"
+      .map(a => a.getAttribute("href"))
+      .filter(href =>
+        href &&
+        href.endsWith(".html") &&
+        href !== "index.html"
       );
 
     if (links.length === 0) return;
 
-    const current = location.pathname.split("/").pop();
-    const index = links.findIndex(l => l.href.endsWith(current));
+    // Normalize current page name safely
+    const segments = location.pathname
+      .split("/")
+      .filter(Boolean); // removes empty segments
+
+    let current = segments[segments.length - 1] || "";
+    current = current.replace(".html", "");
+
+    // Normalize links
+    const normalizedLinks = links.map(href =>
+      href.replace(".html", "")
+    );
+
+    const index = normalizedLinks.indexOf(current);
     if (index === -1) return;
 
     const prev = links[index - 1];
@@ -34,15 +43,15 @@
     container.innerHTML = `
       <nav class="sibling-nav">
         <div>
-          ${prev ? `← <a href="${prev.href}">${prev.text}</a>` : ""}
+          ${prev ? `← <a href="${prev}">Previous</a>` : ""}
         </div>
         <div>
-          ${next ? `<a href="${next.href}">${next.text}</a> →` : ""}
+          ${next ? `<a href="${next}">Next</a> →` : ""}
         </div>
       </nav>
     `;
-  } catch (_) {
-    // fail silently
+  } catch (e) {
+    // Fail silently
   }
 })();
 
