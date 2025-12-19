@@ -3,11 +3,11 @@
   if (!container) return;
 
   try {
-    // Example: /fintech/payment-systems.html
-    const path = window.location.pathname;
+    // Current page: /fintech/payment-systems.html
+    const currentPath = window.location.pathname;
 
     // Section index: /fintech/index.html
-    const sectionIndex = path.replace(/[^/]+$/, "index.html");
+    const sectionIndex = currentPath.replace(/[^/]+$/, "index.html");
 
     fetch(sectionIndex)
       .then(res => {
@@ -17,23 +17,30 @@
       .then(html => {
         const doc = new DOMParser().parseFromString(html, "text/html");
 
+        // Base path, e.g. /fintech/
+        const basePath = sectionIndex.replace("index.html", "");
+
         // Collect article links from index page
         const links = [...doc.querySelectorAll("a")]
           .map(a => a.getAttribute("href"))
           .filter(href =>
             href &&
             href.endsWith(".html") &&
-            href !== "index.html"
-          );
+            href !== "index.html" &&
+            href !== "./index.html" &&
+            href !== "../index.html"
+          )
+          // Convert to absolute paths
+          .map(href => basePath + href);
 
         if (links.length < 2) return;
 
-        const current = path.split("/").pop();
-
         const items = links
-          .filter(href => href !== current)
+          .filter(href => href !== currentPath)
           .map(href => {
             const title = href
+              .split("/")
+              .pop()
               .replace(".html", "")
               .replace(/-/g, " ");
             return `<li><a href="${href}">${title}</a></li>`;
@@ -54,6 +61,7 @@
       .catch(() => {});
   } catch (_) {}
 })();
+
 
 
 (function () {
