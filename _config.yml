@@ -1,9 +1,3 @@
 title: Risul Islam
-description: Fintech domain knowledge & engineering notes
+description: Personal knowledge base
 theme: jekyll-theme-cayman
-defaults:
-  - scope:
-      path: "fintech"
-      type: "pages"
-    values:
-      layout: fintech
