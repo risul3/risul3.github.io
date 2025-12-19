@@ -3,9 +3,13 @@
   if (!container) return;
 
   try {
-    // Determine section index path
+    // 1️⃣ Determine section index path robustly
     const parts = location.pathname.split("/").filter(Boolean);
-    parts.pop(); // remove current page
+
+    // Remove current page (file or directory)
+    parts.pop();
+
+    // Build absolute section index URL
     const indexUrl = "/" + parts.join("/") + "/index.html";
 
     const res = await fetch(indexUrl);
@@ -16,7 +20,7 @@
       "text/html"
     );
 
-    // Collect all article links from index page
+    // 2️⃣ Collect article links from index page
     const links = [...doc.querySelectorAll("a[href$='.html']")]
       .filter(a => !a.getAttribute("href").includes("index.html"))
       .map(a => ({
@@ -26,17 +30,22 @@
 
     if (links.length < 2) return;
 
+    // 3️⃣ Normalize current page name
     const current = location.pathname
       .split("/")
       .filter(Boolean)
       .pop()
       .replace(".html", "");
 
+    // 4️⃣ Exclude current page from list
     const items = links
       .filter(l => l.href.replace(".html", "") !== current)
       .map(l => `<li><a href="${l.href}">${l.text}</a></li>`)
       .join("");
 
+    if (!items) return;
+
+    // 5️⃣ Render sibling list
     container.innerHTML = `
       <section class="sibling-list">
         <h3>Other articles in this section</h3>
@@ -46,9 +55,10 @@
       </section>
     `;
   } catch (_) {
-    // fail silently
+    // Fail silently
   }
 })();
+
 
 
 (function () {
