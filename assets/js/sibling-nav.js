@@ -3,25 +3,26 @@
   if (!container) return;
 
   try {
+    // Load section index
     const res = await fetch("./index.html");
     if (!res.ok) return;
 
     const html = await res.text();
     const doc = new DOMParser().parseFromString(html, "text/html");
 
-    const header = [...doc.querySelectorAll("h2, h3")]
-      .find(h => h.textContent.trim().toLowerCase() === "contents");
-
-    if (!header) return;
-
-    const list = header.nextElementSibling;
-    if (!list || list.tagName !== "UL") return;
-
-    const links = [...list.querySelectorAll("a")]
+    // Collect all article links (relative .html links, excluding index)
+    const links = [...doc.querySelectorAll("a")]
       .map(a => ({
         href: a.getAttribute("href"),
         text: a.textContent.trim()
-      }));
+      }))
+      .filter(l =>
+        l.href &&
+        l.href.endsWith(".html") &&
+        l.href !== "index.html"
+      );
+
+    if (links.length === 0) return;
 
     const current = location.pathname.split("/").pop();
     const index = links.findIndex(l => l.href.endsWith(current));
@@ -32,14 +33,19 @@
 
     container.innerHTML = `
       <nav class="sibling-nav">
-        <div>${prev ? `← <a href="${prev.href}">${prev.text}</a>` : ""}</div>
-        <div>${next ? `<a href="${next.href}">${next.text}</a> →` : ""}</div>
+        <div>
+          ${prev ? `← <a href="${prev.href}">${prev.text}</a>` : ""}
+        </div>
+        <div>
+          ${next ? `<a href="${next.href}">${next.text}</a> →` : ""}
+        </div>
       </nav>
     `;
   } catch (_) {
-    // Fail silently
+    // fail silently
   }
 })();
+
 
 (function () {
   const el = document.getElementById("breadcrumbs");
