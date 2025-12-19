@@ -6,7 +6,26 @@ layout: default
 
 <hr />
 
-<div id="sibling-list"></div>
+<hr />
+
+<section class="sibling-list">
+  <h3>Other articles in this section</h3>
+  <ul>
+    {% assign pages_in_section = site.pages
+       | where: "section", page.section
+       | where_exp: "p", "p.url != page.url"
+       | sort: "path" %}
+
+    {% for p in pages_in_section %}
+      {% if p.url contains '/index.html' %}{% continue %}{% endif %}
+      <li>
+        <a href="{{ p.url }}">
+          {{ p.title | default: p.name | replace: "-", " " }}
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+</section>
 
 <p>
   ← <a href="./index.html">Back to section</a>
