@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Payment Systems in Fintech | Risul Islam</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Payment Systems in Fintech" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A complete, in-depth guide for engineers and tech leads" />
+<meta property="og:description" content="A complete, in-depth guide for engineers and tech leads" />
+<link rel="canonical" href="http://localhost:4000/fintech/payment-systems.html" />
+<meta property="og:url" content="http://localhost:4000/fintech/payment-systems.html" />
+<meta property="og:site_name" content="Risul Islam" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Payment Systems in Fintech" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"A complete, in-depth guide for engineers and tech leads","headline":"Payment Systems in Fintech","url":"http://localhost:4000/fintech/payment-systems.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="preload" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap" as="style" type="text/css" crossorigin>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="/assets/css/style.css?v=43eb351625e6b3a8bb06a1469f8d4b5e941c7172">
+    <!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
+
+<!-- Setup Google Analytics -->
+
+
+
+<!-- You can set your favicon here -->
+<!-- link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" -->
+
+<!-- end custom head snippets -->
+
+  </head>
+  <body>
+    <a id="skip-to-content" href="#content">Skip to the content.</a>
+
+    <header class="page-header" role="banner">
+      <h1 class="project-name">Payment Systems in Fintech</h1>
+      <h2 class="project-tagline">A complete, in-depth guide for engineers and tech leads</h2>
+      
+        <a href="https://github.com/risul3/risul3.github.io" class="btn">View on GitHub</a>
+      
+      
+    </header>
+
+    <main id="content" class="main-content" role="main">
+      <p>← <a href="index.html">Fintech Home</a></p>
+
+<p><em>Last updated: Dec 2025</em></p>
+
+<h1 id="payment-systems-in-fintech-a-complete-indepth-guide-for-engineers">Payment Systems in Fintech: A Complete, In‑Depth Guide for Engineers</h1>
+
+<p>This article is intentionally written as a <strong>long-form reference</strong> rather than a quick overview. The goal is simple: you should be able to come back to this document months later, read any section in isolation, and immediately regain strong conceptual clarity.</p>
+
+<p>Every important term is <strong>defined</strong>, <strong>explained</strong>, and <strong>connected to real-world engineering responsibilities</strong>. This mirrors how payment systems actually behave in production fintech environments.</p>
+
+<hr />
+
+<h1 id="-introduction-why-payment-systems-deserve-serious-study">🚀 Introduction: Why Payment Systems Deserve Serious Study</h1>
+
+<p>Payment systems are not just APIs that move money. They are highly regulated, fault-sensitive, distributed systems operating under strict financial, legal, and operational constraints.</p>
+
+<p>For a senior engineer or tech lead, understanding payments deeply means:</p>
+
+<ul>
+  <li>Designing systems that never lose money</li>
+  <li>Preventing duplicate charges and settlement mismatches</li>
+  <li>Supporting compliance, risk, and operations teams</li>
+  <li>Making architecture decisions with financial consequences in mind</li>
+</ul>
+
+<p>This article covers payment systems end‑to‑end — from card swipe to settlement in the bank account.</p>
+
+<hr />
+
+<h1 id="1-the-digital-payment-ecosystem-big-picture">1. The Digital Payment Ecosystem (Big Picture)</h1>
+
+<p>A digital payment is a coordinated interaction between multiple independent entities. Each entity owns part of the risk, part of the data, and part of the decision-making.</p>
+
+<h3 id="key-participants-explained">Key Participants Explained</h3>
+
+<p><strong>Cardholder</strong> – The customer initiating the payment using a card or wallet.</p>
+
+<p><strong>Merchant</strong> – The business accepting the payment.</p>
+
+<p><strong>Payment Service Provider (PSP)</strong> – A technology platform (e.g., SSLCOMMERZ, Stripe, Adyen) that connects merchants to financial networks.</p>
+
+<p><strong>Acquirer Bank</strong> – The merchant’s bank that processes payments on the merchant’s behalf.</p>
+
+<p><strong>Card Network</strong> – Visa, Mastercard, or Amex. They provide routing, rules, and global interoperability.</p>
+
+<p><strong>Issuer Bank</strong> – The customer’s bank. This bank decides whether to approve or decline the transaction.</p>
+
+<p>Understanding these roles is critical because <strong>each failure, delay, or rejection comes from a specific party</strong>.</p>
+
+<hr />
+
+<h1 id="2-payment-authorization-the-real-time-decision-engine">2. Payment Authorization: The Real-Time Decision Engine</h1>
+
+<p><strong>Authorization</strong> is the process where the issuer bank decides whether a transaction should be allowed.</p>
+
+<h3 id="what-actually-happens">What Actually Happens</h3>
+
+<p>When a user submits payment:</p>
+
+<ol>
+  <li>Card details are securely captured and tokenized</li>
+  <li>The PSP sends an authorization request to the acquirer</li>
+  <li>The acquirer forwards it to the card network</li>
+  <li>The card network routes it to the issuer</li>
+  <li>
+    <p>The issuer evaluates:</p>
+
+    <ul>
+      <li>Available balance or credit limit</li>
+      <li>Card status (blocked, expired, stolen)</li>
+      <li>Fraud signals</li>
+    </ul>
+  </li>
+  <li>The issuer sends an approve or decline response</li>
+</ol>
+
+<p>This entire flow typically completes in <strong>300–1500 milliseconds</strong>.</p>
+
+<h3 id="engineering-responsibilities">Engineering Responsibilities</h3>
+
+<p>Authorization systems must:</p>
+
+<ul>
+  <li>Be highly available</li>
+  <li>Enforce idempotency</li>
+  <li>Apply fraud checks before network submission</li>
+  <li>Preserve issuer error codes accurately</li>
+</ul>
+
+<p>A small mistake here directly affects revenue and trust.</p>
+
+<hr />
+
+<h1 id="3-3d-secure-3ds--3ds2-strong-customer-authentication">3. 3D Secure (3DS / 3DS2): Strong Customer Authentication</h1>
+
+<p><strong>Definition:</strong> 3D Secure is an additional authentication protocol that verifies the cardholder’s identity using OTPs, banking apps, or biometrics.</p>
+
+<h3 id="why-it-exists">Why It Exists</h3>
+
+<ul>
+  <li>Reduces card‑not‑present fraud</li>
+  <li>Shifts fraud liability from merchant to issuer</li>
+  <li>Required by regulators in many regions</li>
+</ul>
+
+<h3 id="engineering-complexity">Engineering Complexity</h3>
+
+<p>3DS introduces:</p>
+
+<ul>
+  <li>Browser/app redirects</li>
+  <li>Asynchronous confirmation</li>
+  <li>Multiple intermediate states</li>
+</ul>
+
+<p>Systems must handle:</p>
+
+<ul>
+  <li>Frictionless vs challenge flows</li>
+  <li>Webhook-based final authorization</li>
+  <li>User abandonment gracefully</li>
+</ul>
+
+<hr />
+
+<h1 id="4-capture-void-and-reversal-managing-authorized-funds">4. Capture, Void, and Reversal: Managing Authorized Funds</h1>
+
+<p>Authorization <strong>reserves</strong> money; it does not move it.</p>
+
+<h3 id="capture">Capture</h3>
+
+<p><strong>Definition:</strong> Capture confirms the transaction and makes it eligible for settlement.</p>
+
+<p>Engineering impact:</p>
+
+<ul>
+  <li>Partial captures must be supported</li>
+  <li>Captures must be idempotent</li>
+</ul>
+
+<h3 id="void">Void</h3>
+
+<p><strong>Definition:</strong> Cancels an authorization before settlement.</p>
+
+<p>Used when:</p>
+
+<ul>
+  <li>Order is canceled</li>
+  <li>Stock is unavailable</li>
+</ul>
+
+<h3 id="reversal">Reversal</h3>
+
+<p><strong>Definition:</strong> Releases reserved funds after authorization due to errors or risk decisions.</p>
+
+<p>These flows require <strong>strict state machines</strong> and <strong>audit logs</strong>.</p>
+
+<hr />
+
+<h1 id="5-clearing--settlement-where-money-actually-moves">5. Clearing &amp; Settlement: Where Money Actually Moves</h1>
+
+<p>Authorization is logical approval. <strong>Settlement is financial reality</strong>.</p>
+
+<h3 id="clearing">Clearing</h3>
+
+<p>Transactions are batched and submitted to card networks.</p>
+
+<p>Networks:</p>
+
+<ul>
+  <li>Apply interchange rules</li>
+  <li>Calculate fees</li>
+  <li>Route net positions</li>
+</ul>
+
+<h3 id="settlement">Settlement</h3>
+
+<p>Funds move:
+Issuer → Network → Acquirer → Merchant</p>
+
+<h3 id="settlement-cycles">Settlement Cycles</h3>
+
+<ul>
+  <li>T+0: Same day</li>
+  <li>T+1 / T+2: Business day delays</li>
+</ul>
+
+<p>Engineering systems must:</p>
+
+<ul>
+  <li>Track settlement batches</li>
+  <li>Reconcile deposits vs transactions</li>
+  <li>Handle holidays and cutoffs</li>
+</ul>
+
+<hr />
+
+<h1 id="6-tokenization--pcidss-mandatory-security-foundations">6. Tokenization &amp; PCI‑DSS: Mandatory Security Foundations</h1>
+
+<p><strong>Tokenization</strong> replaces sensitive card data with non-sensitive tokens.</p>
+
+<p><strong>PCI‑DSS</strong> is a security standard governing how card data is handled.</p>
+
+<h3 id="why-engineers-must-care">Why Engineers Must Care</h3>
+
+<ul>
+  <li>Logging a PAN accidentally is a compliance breach</li>
+  <li>Poor access control leads to audit failures</li>
+</ul>
+
+<p>Best practice:</p>
+
+<ul>
+  <li>Never store raw card data</li>
+  <li>Delegate card handling to certified PSPs</li>
+</ul>
+
+<hr />
+
+<h1 id="7-bin-routing-smart-decisions-before-sending-a-transaction">7. BIN Routing: Smart Decisions Before Sending a Transaction</h1>
+
+<p><strong>Definition:</strong> BIN (Bank Identification Number) identifies the issuing bank and card type.</p>
+
+<h3 id="why-it-matters">Why It Matters</h3>
+
+<ul>
+  <li>Enables smart routing</li>
+  <li>Improves authorization success</li>
+  <li>Reduces processing cost</li>
+</ul>
+
+<p>Engineering usage:</p>
+
+<ul>
+  <li>Bank-specific routing rules</li>
+  <li>Country validation</li>
+  <li>Fraud risk profiling</li>
+</ul>
+
+<hr />
+
+<h1 id="8-interchange-fees--cost-awareness">8. Interchange, Fees &amp; Cost Awareness</h1>
+
+<p><strong>Interchange</strong> is the fee paid to the issuer for processing transactions.</p>
+
+<p>Fees vary based on:</p>
+
+<ul>
+  <li>Card type</li>
+  <li>Geography</li>
+  <li>Risk level</li>
+</ul>
+
+<p>Engineers must:</p>
+
+<ul>
+  <li>Generate transparent fee reports</li>
+  <li>Support finance and reconciliation teams</li>
+  <li>Understand cost tradeoffs in routing logic</li>
+</ul>
+
+<hr />
+
+<h1 id="9-wallets--alternative-payment-methods">9. Wallets &amp; Alternative Payment Methods</h1>
+
+<p><strong>Definition:</strong> Wallets like Google Pay store tokenized credentials and use device security.</p>
+
+<h3 id="why-wallets-matter">Why Wallets Matter</h3>
+
+<ul>
+  <li>Higher success rates</li>
+  <li>Lower fraud</li>
+  <li>Better UX</li>
+</ul>
+
+<p>Engineering differences:</p>
+
+<ul>
+  <li>Different payload formats</li>
+  <li>Token lifecycle management</li>
+  <li>Wallet-specific disputes</li>
+</ul>
+
+<hr />
+
+<h1 id="10-chargebacks--disputes-when-payments-are-reversed">10. Chargebacks &amp; Disputes: When Payments Are Reversed</h1>
+
+<p>A <strong>chargeback</strong> occurs when a cardholder disputes a transaction.</p>
+
+<h3 id="common-reasons">Common Reasons</h3>
+
+<ul>
+  <li>Fraud</li>
+  <li>Duplicate charge</li>
+  <li>Service not delivered</li>
+</ul>
+
+<h3 id="engineering-responsibilities-1">Engineering Responsibilities</h3>
+
+<ul>
+  <li>Track dispute lifecycles</li>
+  <li>Store evidence</li>
+  <li>Update ledgers correctly</li>
+</ul>
+
+<p>High chargeback ratios can result in <strong>merchant blacklisting</strong>.</p>
+
+<hr />
+
+<h1 id="11-reliability-idempotency--exactlyonce-behavior">11. Reliability, Idempotency &amp; Exactly‑Once Behavior</h1>
+
+<p>Payment systems must never double‑charge.</p>
+
+<p>Core techniques:</p>
+
+<ul>
+  <li>Idempotency keys</li>
+  <li>Request hashing</li>
+  <li>State machines</li>
+  <li>Event-driven processing</li>
+</ul>
+
+<p>This is non‑negotiable in fintech.</p>
+
+<hr />
+
+<h1 id="12-operational-reality-of-live-payment-systems">12. Operational Reality of Live Payment Systems</h1>
+
+<p>Real systems face:</p>
+
+<ul>
+  <li>Weekend settlement gaps</li>
+  <li>Manual reconciliation fixes</li>
+  <li>Regulatory audits</li>
+  <li>Merchant support escalations</li>
+</ul>
+
+<p>Good systems support <strong>operations, compliance, and finance teams</strong>, not just developers.</p>
+
+<hr />
+
+<h1 id="️-final-thoughts">✔️ Final Thoughts</h1>
+
+<p>Payment systems combine distributed systems engineering with financial discipline. Mastering them moves you from being an integration engineer to a <strong>fintech systems expert</strong>.</p>
+
+<p>This document is designed to be reused, shared, and expanded as your team grows.</p>
+
+<p>👉 Next article: <strong>Core Banking Systems — Ledgers, Accounts, and Interest Explained</strong></p>
+
+
+<hr />
+
+<hr />
+
+<section class="sibling-list">
+  <h3>Other articles in this section</h3>
+  <ul>
+    
+
+    
+      
+      <li>
+        <a href="/fintech/analytics-kpis.html">
+          Fintech Analytics & KPIs: Measuring What Actually Matters
+        </a>
+      </li>
+    
+      
+      <li>
+        <a href="/fintech/architecture-distributed-systems.html">
+          Fintech Architecture & Distributed Financial Systems: Designing for Money, Scale, and Trust
+        </a>
+      </li>
+    
+      
+      <li>
+        <a href="/fintech/compliance-regulation.html">
+          Compliance & Regulation in Fintech: What Engineers Must Understand
+        </a>
+      </li>
+    
+      
+      <li>
+        <a href="/fintech/core-banking.html">
+          Core Banking Systems: How Banks Actually Work (An Engineer’s Guide)
+        </a>
+      </li>
+    
+      
+      <li>
+        <a href="/fintech/financial-products.html">
+          Financial Products & Instruments in Fintech: An Engineer’s Deep Dive
+        </a>
+      </li>
+    
+      
+      <li>
+        <a href="/fintech/fraud-risk.html">
+          Fraud & Risk Engines in Fintech: Designing Systems That Protect Money
+        </a>
+      </li>
+    
+      
+      <li>
+        <a href="/fintech/global-platforms.html">
+          Studying Global Fintech Platforms: Reverse Engineering How the Best Really Work
+        </a>
+      </li>
+    
+      
+      <li>
+        <a href="/fintech/">
+          Fintech Domain Knowledge
+        </a>
+      </li>
+    
+  </ul>
+</section>
+
+<p>
+  ← <a href="./index.html">Back to section</a>
+</p>
+
+<script src="/assets/js/custom.js"></script>
+
+
+      <footer class="site-footer">
+        
+          <span class="site-footer-owner"><a href="https://github.com/risul3/risul3.github.io">risul3.github.io</a> is maintained by <a href="https://github.com/risul3">risul3</a>.</span>
+        
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a>.</span>
+      </footer>
+    </main>
+  </body>
+</html>

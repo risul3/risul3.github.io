@@ -1,0 +1,12 @@
+.sibling-list {
+  margin: 3rem 0;
+  padding-top: 1rem;
+}
+
+.sibling-list ul {
+  margin-left: 1.2rem;
+}
+
+.sibling-list li {
+  margin: 0.4rem 0;
+}

@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Compliance &amp; Regulation in Fintech: What Engineers Must Understand | Risul Islam</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Compliance &amp; Regulation in Fintech: What Engineers Must Understand" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A complete, in-depth guide for engineers and tech leads" />
+<meta property="og:description" content="A complete, in-depth guide for engineers and tech leads" />
+<link rel="canonical" href="http://localhost:4000/fintech/compliance-regulation.html" />
+<meta property="og:url" content="http://localhost:4000/fintech/compliance-regulation.html" />
+<meta property="og:site_name" content="Risul Islam" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Compliance &amp; Regulation in Fintech: What Engineers Must Understand" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"A complete, in-depth guide for engineers and tech leads","headline":"Compliance &amp; Regulation in Fintech: What Engineers Must Understand","url":"http://localhost:4000/fintech/compliance-regulation.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="preload" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap" as="style" type="text/css" crossorigin>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="/assets/css/style.css?v=43eb351625e6b3a8bb06a1469f8d4b5e941c7172">
+    <!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
+
+<!-- Setup Google Analytics -->
+
+
+
+<!-- You can set your favicon here -->
+<!-- link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" -->
+
+<!-- end custom head snippets -->
+
+  </head>
+  <body>
+    <a id="skip-to-content" href="#content">Skip to the content.</a>
+
+    <header class="page-header" role="banner">
+      <h1 class="project-name">Compliance & Regulation in Fintech: What Engineers Must Understand</h1>
+      <h2 class="project-tagline">A complete, in-depth guide for engineers and tech leads</h2>
+      
+        <a href="https://github.com/risul3/risul3.github.io" class="btn">View on GitHub</a>
+      
+      
+    </header>
+
+    <main id="content" class="main-content" role="main">
+      <p>← <a href="index.html">Fintech Home</a></p>
+
+<p><em>Last updated: Dec 2025</em></p>
+
+<hr />
+
+<h2 id="-introduction">🚀 Introduction</h2>
+
+<p>In fintech, <strong>compliance is not a legal afterthought</strong>. It is a core system requirement that directly shapes architecture, data models, workflows, and even deployment strategies.</p>
+
+<p>Many engineers see compliance as something “handled by legal or operations.” In reality, most compliance failures are <strong>engineering failures</strong>—missing logs, mutable data, weak access control, or unclear audit trails.</p>
+
+<p>This article explains fintech compliance from an <strong>engineering-first perspective</strong>, focusing on what you must build into systems from day one.</p>
+
+<hr />
+
+<h2 id="1-what-does-compliance-mean-in-fintech">1. What Does “Compliance” Mean in Fintech?</h2>
+
+<p><strong>Definition:</strong> Compliance refers to adhering to financial laws, regulatory guidelines, and industry standards imposed by regulators, central banks, and card networks.</p>
+
+<p>In practice, compliance requires systems to be:</p>
+
+<ul>
+  <li>Auditable</li>
+  <li>Traceable</li>
+  <li>Secure</li>
+  <li>Consistent</li>
+  <li>Explainable</li>
+</ul>
+
+<p>Engineering implication:</p>
+
+<blockquote>
+  <p>If a system cannot explain <em>what happened, when, why, and who approved it</em>, it is not compliant.</p>
+</blockquote>
+
+<hr />
+
+<h2 id="2-kyc-know-your-customer">2. KYC (Know Your Customer)</h2>
+
+<p><strong>Definition:</strong> KYC is the process of verifying the identity of customers before allowing them to use financial services.</p>
+
+<h3 id="why-kyc-exists">Why KYC Exists</h3>
+
+<ul>
+  <li>Prevents identity fraud</li>
+  <li>Reduces money laundering</li>
+  <li>Enables accountability</li>
+</ul>
+
+<h3 id="typical-kyc-data">Typical KYC Data</h3>
+
+<ul>
+  <li>National ID / Passport</li>
+  <li>Date of birth</li>
+  <li>Address</li>
+  <li>Selfie or biometric verification</li>
+</ul>
+
+<h3 id="engineering-responsibilities">Engineering Responsibilities</h3>
+
+<ul>
+  <li>Secure document storage</li>
+  <li>Versioned KYC status</li>
+  <li>Re-verification workflows</li>
+  <li>Manual review queues</li>
+</ul>
+
+<p>KYC is a <strong>lifecycle</strong>, not a one-time event.</p>
+
+<hr />
+
+<h2 id="3-aml-anti-money-laundering">3. AML (Anti-Money Laundering)</h2>
+
+<p><strong>Definition:</strong> AML refers to systems and processes that detect and prevent illegal movement of money.</p>
+
+<h3 id="common-aml-signals">Common AML Signals</h3>
+
+<ul>
+  <li>Unusual transaction volume</li>
+  <li>Rapid fund movement</li>
+  <li>Structuring (breaking large amounts into small ones)</li>
+  <li>Sudden changes in behavior</li>
+</ul>
+
+<h3 id="engineering-responsibilities-1">Engineering Responsibilities</h3>
+
+<ul>
+  <li>Transaction monitoring engines</li>
+  <li>Rule configuration systems</li>
+  <li>Case management tools</li>
+  <li>Alert escalation flows</li>
+</ul>
+
+<p>AML systems must balance <strong>false positives</strong> with regulatory strictness.</p>
+
+<hr />
+
+<h2 id="4-sanctions-screening-ofac-un-local-lists">4. Sanctions Screening (OFAC, UN, Local Lists)</h2>
+
+<p><strong>Definition:</strong> Sanctions screening ensures customers and transactions do not involve restricted individuals, entities, or countries.</p>
+
+<h3 id="where-screening-happens">Where Screening Happens</h3>
+
+<ul>
+  <li>During onboarding</li>
+  <li>Before transactions</li>
+  <li>Periodically for existing customers</li>
+</ul>
+
+<h3 id="engineering-challenges">Engineering Challenges</h3>
+
+<ul>
+  <li>Name matching (fuzzy search)</li>
+  <li>Performance at scale</li>
+  <li>Explainable matches</li>
+</ul>
+
+<p>Systems must log <strong>why</strong> a match was flagged.</p>
+
+<hr />
+
+<h2 id="5-pci-dss-card-data-security">5. PCI-DSS: Card Data Security</h2>
+
+<p><strong>Definition:</strong> PCI-DSS is a global security standard governing how card data is processed, stored, and transmitted.</p>
+
+<h3 id="key-pci-rules-engineers-must-know">Key PCI Rules Engineers Must Know</h3>
+
+<ul>
+  <li>Never store full PAN unless certified</li>
+  <li>Mask card numbers in logs and UI</li>
+  <li>Encrypt data in transit and at rest</li>
+  <li>Restrict access by role</li>
+</ul>
+
+<p>Engineering takeaway:</p>
+
+<blockquote>
+  <p>PCI compliance is largely achieved through <strong>architecture decisions</strong>, not paperwork.</p>
+</blockquote>
+
+<hr />
+
+<h2 id="6-audit-trails--immutability">6. Audit Trails &amp; Immutability</h2>
+
+<p><strong>Definition:</strong> An audit trail is a complete, chronological record of system activity.</p>
+
+<h3 id="what-auditors-expect">What Auditors Expect</h3>
+
+<ul>
+  <li>Who performed an action</li>
+  <li>What changed</li>
+  <li>When it happened</li>
+  <li>Why it happened</li>
+</ul>
+
+<p>Engineering patterns:</p>
+
+<ul>
+  <li>Append-only logs</li>
+  <li>Event sourcing</li>
+  <li>Immutable records</li>
+  <li>Time-stamped approvals</li>
+</ul>
+
+<p>Never overwrite financial data.</p>
+
+<hr />
+
+<h2 id="7-role-based-access-control-rbac">7. Role-Based Access Control (RBAC)</h2>
+
+<p><strong>Definition:</strong> RBAC restricts system actions based on user roles.</p>
+
+<h3 id="why-rbac-is-critical">Why RBAC Is Critical</h3>
+
+<ul>
+  <li>Prevents internal fraud</li>
+  <li>Limits blast radius of mistakes</li>
+  <li>Required by regulators</li>
+</ul>
+
+<p>Engineering best practices:</p>
+
+<ul>
+  <li>Least-privilege access</li>
+  <li>Approval workflows</li>
+  <li>Dual control for sensitive actions</li>
+</ul>
+
+<hr />
+
+<h2 id="8-data-protection--privacy">8. Data Protection &amp; Privacy</h2>
+
+<p>Compliance is not just about money.</p>
+
+<h3 id="data-types-to-protect">Data Types to Protect</h3>
+
+<ul>
+  <li>Personally Identifiable Information (PII)</li>
+  <li>Financial data</li>
+  <li>Credentials and tokens</li>
+</ul>
+
+<h3 id="engineering-controls">Engineering Controls</h3>
+
+<ul>
+  <li>Encryption</li>
+  <li>Data minimization</li>
+  <li>Masking</li>
+  <li>Access logging</li>
+</ul>
+
+<p>Privacy failures are compliance failures.</p>
+
+<hr />
+
+<h2 id="9-regulatory-reporting">9. Regulatory Reporting</h2>
+
+<p>Fintech systems must produce accurate reports for regulators.</p>
+
+<h3 id="common-reports">Common Reports</h3>
+
+<ul>
+  <li>Suspicious Transaction Reports (STR)</li>
+  <li>Transaction volume reports</li>
+  <li>Settlement summaries</li>
+</ul>
+
+<p>Engineering requirements:</p>
+
+<ul>
+  <li>Deterministic data</li>
+  <li>Historical reproducibility</li>
+  <li>Schema stability</li>
+</ul>
+
+<p>Reports must match <strong>ledger truth</strong>.</p>
+
+<hr />
+
+<h2 id="10-manual-operations--compliance-risk">10. Manual Operations &amp; Compliance Risk</h2>
+
+<p>Manual data changes are one of the biggest compliance risks.</p>
+
+<h3 id="engineering-safeguards">Engineering Safeguards</h3>
+
+<ul>
+  <li>Disable direct DB writes</li>
+  <li>Approval-based admin tools</li>
+  <li>Mandatory comments and reasons</li>
+  <li>Full change history</li>
+</ul>
+
+<p>Compliance teams fear manual overrides for good reason.</p>
+
+<hr />
+
+<h2 id="11-compliance-vs-product-velocity">11. Compliance vs Product Velocity</h2>
+
+<p>Compliance is often seen as slowing teams down.</p>
+
+<p>In reality:</p>
+
+<ul>
+  <li>Early compliance reduces rework</li>
+  <li>Clear rules enable faster decisions</li>
+  <li>Good auditability builds trust</li>
+</ul>
+
+<p>Well-designed systems make compliance <strong>invisible</strong> to developers.</p>
+
+<hr />
+
+<h2 id="️-final-thoughts">✔️ Final Thoughts</h2>
+
+<p>Compliance is not about avoiding fines—it is about building <strong>trustworthy financial systems</strong>.</p>
+
+<p>Engineers who understand compliance deeply design better architectures, avoid operational disasters, and become invaluable to fintech organizations.</p>
+
+<hr />
+
+<p>👉 <strong>Next article:</strong> Fraud &amp; Risk Engines in Fintech</p>
+
+
+<hr />
+
+<hr />
+
+<section class="sibling-list">
+  <h3>Other articles in this section</h3>
+  <ul>
+    
+
+    
+      
+      <li>
+        <a href="/fintech/analytics-kpis.html">
+          Fintech Analytics & KPIs: Measuring What Actually Matters
+        </a>
+      </li>
+    
+      
+      <li>
+        <a href="/fintech/architecture-distributed-systems.html">
+          Fintech Architecture & Distributed Financial Systems: Designing for Money, Scale, and Trust
+        </a>
+      </li>
+    
+      
+      <li>
+        <a href="/fintech/core-banking.html">
+          Core Banking Systems: How Banks Actually Work (An Engineer’s Guide)
+        </a>
+      </li>
+    
+      
+      <li>
+        <a href="/fintech/financial-products.html">
+          Financial Products & Instruments in Fintech: An Engineer’s Deep Dive
+        </a>
+      </li>
+    
+      
+      <li>
+        <a href="/fintech/fraud-risk.html">
+          Fraud & Risk Engines in Fintech: Designing Systems That Protect Money
+        </a>
+      </li>
+    
+      
+      <li>
+        <a href="/fintech/global-platforms.html">
+          Studying Global Fintech Platforms: Reverse Engineering How the Best Really Work
+        </a>
+      </li>
+    
+      
+      <li>
+        <a href="/fintech/">
+          Fintech Domain Knowledge
+        </a>
+      </li>
+    
+      
+      <li>
+        <a href="/fintech/payment-systems.html">
+          Payment Systems in Fintech
+        </a>
+      </li>
+    
+  </ul>
+</section>
+
+<p>
+  ← <a href="./index.html">Back to section</a>
+</p>
+
+<script src="/assets/js/custom.js"></script>
+
+
+      <footer class="site-footer">
+        
+          <span class="site-footer-owner"><a href="https://github.com/risul3/risul3.github.io">risul3.github.io</a> is maintained by <a href="https://github.com/risul3">risul3</a>.</span>
+        
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a>.</span>
+      </footer>
+    </main>
+  </body>
+</html>

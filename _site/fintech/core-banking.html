@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Core Banking Systems: How Banks Actually Work (An Engineer’s Guide) | Risul Islam</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Core Banking Systems: How Banks Actually Work (An Engineer’s Guide)" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Payment Systems in Fintech" />
+<meta property="og:description" content="Payment Systems in Fintech" />
+<link rel="canonical" href="http://localhost:4000/fintech/core-banking.html" />
+<meta property="og:url" content="http://localhost:4000/fintech/core-banking.html" />
+<meta property="og:site_name" content="Risul Islam" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Core Banking Systems: How Banks Actually Work (An Engineer’s Guide)" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Payment Systems in Fintech","headline":"Core Banking Systems: How Banks Actually Work (An Engineer’s Guide)","url":"http://localhost:4000/fintech/core-banking.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="preload" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap" as="style" type="text/css" crossorigin>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="/assets/css/style.css?v=43eb351625e6b3a8bb06a1469f8d4b5e941c7172">
+    <!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
+
+<!-- Setup Google Analytics -->
+
+
+
+<!-- You can set your favicon here -->
+<!-- link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" -->
+
+<!-- end custom head snippets -->
+
+  </head>
+  <body>
+    <a id="skip-to-content" href="#content">Skip to the content.</a>
+
+    <header class="page-header" role="banner">
+      <h1 class="project-name">Core Banking Systems: How Banks Actually Work (An Engineer’s Guide)</h1>
+      <h2 class="project-tagline">Payment Systems in Fintech</h2>
+      
+        <a href="https://github.com/risul3/risul3.github.io" class="btn">View on GitHub</a>
+      
+      
+    </header>
+
+    <main id="content" class="main-content" role="main">
+      <p>← <a href="index.html">Fintech Home</a></p>
+
+<p><em>Last updated: Dec 2025</em></p>
+
+<hr />
+
+<h2 id="-introduction">🚀 Introduction</h2>
+
+<p>When engineers work in fintech, they often interact with <strong>payment gateways, APIs, and wallets</strong>, but very few truly understand the system that sits underneath almost everything: the <strong>core banking system (CBS)</strong>.</p>
+
+<p>A core banking system is not just a database of accounts. It is the <strong>source of truth for money</strong>, designed to be correct, auditable, and regulator-friendly above all else.</p>
+
+<p>In this article, we will break down core banking systems from an <strong>engineering-first perspective</strong>, explaining how accounts, ledgers, balances, interest, and settlements actually work inside banks.</p>
+
+<hr />
+
+<h2 id="1-what-is-a-core-banking-system">1. What Is a Core Banking System?</h2>
+
+<p><strong>Definition:</strong> A Core Banking System (CBS) is the central system used by banks to manage customer accounts, balances, transactions, loans, and interest calculations.</p>
+
+<p>It typically supports:</p>
+
+<ul>
+  <li>Savings and current accounts</li>
+  <li>Loans and credit products</li>
+  <li>Transaction posting</li>
+  <li>Interest calculation</li>
+  <li>Regulatory reporting</li>
+</ul>
+
+<p>Examples of popular CBS platforms include <strong>Temenos</strong>, <strong>Finacle</strong>, and <strong>Oracle FLEXCUBE</strong>.</p>
+
+<p>From an engineering point of view, a CBS is optimized for:</p>
+
+<ul>
+  <li><strong>Correctness over speed</strong></li>
+  <li><strong>Strong consistency</strong></li>
+  <li><strong>Auditability and traceability</strong></li>
+</ul>
+
+<hr />
+
+<h2 id="2-accounts-vs-balances-a-critical-distinction">2. Accounts vs Balances (A Critical Distinction)</h2>
+
+<p>One of the most common misconceptions is that an <strong>account equals a balance</strong>.</p>
+
+<h3 id="account">Account</h3>
+
+<p><strong>Definition:</strong> An account represents a contractual relationship between the bank and a customer.</p>
+
+<p>It contains:</p>
+
+<ul>
+  <li>Account number</li>
+  <li>Account type (savings, current, loan)</li>
+  <li>Currency</li>
+  <li>Status (active, frozen, closed)</li>
+</ul>
+
+<h3 id="balance">Balance</h3>
+
+<p><strong>Definition:</strong> A balance is a <strong>computed value</strong>, derived from ledger entries.</p>
+
+<p>Important balances include:</p>
+
+<ul>
+  <li>Available balance</li>
+  <li>Ledger (book) balance</li>
+  <li>Hold / lien amount</li>
+</ul>
+
+<p>Engineering implication:</p>
+
+<blockquote>
+  <p><strong>Balances should never be directly updated. They must always be derived from ledger entries.</strong></p>
+</blockquote>
+
+<hr />
+
+<h2 id="3-the-ledger-the-heart-of-core-banking">3. The Ledger: The Heart of Core Banking</h2>
+
+<p><strong>Definition:</strong> A ledger is a chronological, immutable record of all financial entries.</p>
+
+<p>Modern banking systems use <strong>double-entry accounting</strong>, meaning:</p>
+
+<ul>
+  <li>Every transaction has a debit</li>
+  <li>Every transaction has a corresponding credit</li>
+</ul>
+
+<h3 id="example">Example</h3>
+
+<p>If a customer transfers 1,000 BDT:</p>
+
+<ul>
+  <li>Debit: Customer account (-1000)</li>
+  <li>Credit: Bank settlement account (+1000)</li>
+</ul>
+
+<p>This ensures:</p>
+
+<ul>
+  <li>Total money is conserved</li>
+  <li>Errors are detectable</li>
+  <li>Audits are possible</li>
+</ul>
+
+<p>Engineering rules:</p>
+
+<ul>
+  <li>Ledger entries are append-only</li>
+  <li>No updates or deletes</li>
+  <li>Corrections are done via reversals</li>
+</ul>
+
+<hr />
+
+<h2 id="4-posting-transactions-real-time-vs-batch">4. Posting Transactions: Real-Time vs Batch</h2>
+
+<h3 id="real-time-posting">Real-Time Posting</h3>
+
+<p>Used for:</p>
+
+<ul>
+  <li>ATM withdrawals</li>
+  <li>Card transactions</li>
+  <li>Instant transfers</li>
+</ul>
+
+<p>Characteristics:</p>
+
+<ul>
+  <li>Strong consistency</li>
+  <li>Immediate balance impact</li>
+  <li>Higher infrastructure cost</li>
+</ul>
+
+<h3 id="batch-posting">Batch Posting</h3>
+
+<p>Used for:</p>
+
+<ul>
+  <li>Interest calculation</li>
+  <li>Fees</li>
+  <li>End-of-day settlement</li>
+</ul>
+
+<p>Characteristics:</p>
+
+<ul>
+  <li>Cost-efficient</li>
+  <li>Easier reconciliation</li>
+  <li>Delayed balance reflection</li>
+</ul>
+
+<p>Most banks use <strong>a hybrid approach</strong>.</p>
+
+<hr />
+
+<h2 id="5-reversals-adjustments-and-corrections">5. Reversals, Adjustments, and Corrections</h2>
+
+<p>Mistakes are inevitable in financial systems.</p>
+
+<h3 id="reversal">Reversal</h3>
+
+<p><strong>Definition:</strong> A reversal negates a previous transaction by posting opposite ledger entries.</p>
+
+<h3 id="adjustment">Adjustment</h3>
+
+<p><strong>Definition:</strong> An adjustment corrects balances due to fees, penalties, or operational issues.</p>
+
+<p>Engineering principle:</p>
+
+<blockquote>
+  <p><strong>Never modify an old entry. Always add a new one.</strong></p>
+</blockquote>
+
+<p>This preserves audit trails.</p>
+
+<hr />
+
+<h2 id="6-interest-calculation-why-its-harder-than-it-looks">6. Interest Calculation (Why It’s Harder Than It Looks)</h2>
+
+<p>Interest is not simply:</p>
+
+<blockquote>
+  <p>balance × rate</p>
+</blockquote>
+
+<h3 id="savings-interest">Savings Interest</h3>
+
+<p>Calculated using:</p>
+
+<ul>
+  <li>Daily closing balance</li>
+  <li>Minimum balance</li>
+  <li>Average balance</li>
+</ul>
+
+<h3 id="loan-interest">Loan Interest</h3>
+
+<p>Depends on:</p>
+
+<ul>
+  <li>Reducing balance</li>
+  <li>Flat rate</li>
+  <li>Repayment schedule</li>
+</ul>
+
+<p>Engineering challenges:</p>
+
+<ul>
+  <li>Calendar correctness</li>
+  <li>Leap years</li>
+  <li>Holidays</li>
+  <li>Retroactive corrections</li>
+</ul>
+
+<p>Interest engines are often <strong>separate services</strong> integrated with CBS.</p>
+
+<hr />
+
+<h2 id="7-loans-in-core-banking">7. Loans in Core Banking</h2>
+
+<p>A loan is a <strong>state machine</strong>, not just a number.</p>
+
+<p>Loan lifecycle:</p>
+
+<ol>
+  <li>Disbursement</li>
+  <li>Interest accrual</li>
+  <li>EMI posting</li>
+  <li>Penalties</li>
+  <li>Closure</li>
+</ol>
+
+<p>Each stage produces ledger entries.</p>
+
+<p>Engineering takeaway:</p>
+
+<blockquote>
+  <p>Treat loans as workflows with financial side effects.</p>
+</blockquote>
+
+<hr />
+
+<h2 id="8-clearing-systems-ach-rtgs-and-beftn">8. Clearing Systems: ACH, RTGS, and BEFTN</h2>
+
+<p>Banks do not move money directly between each other.</p>
+
+<h3 id="ach--beftn">ACH / BEFTN</h3>
+
+<p>Used for:</p>
+
+<ul>
+  <li>Salary payments</li>
+  <li>Bulk transfers</li>
+</ul>
+
+<p>Characteristics:</p>
+
+<ul>
+  <li>Batch-based</li>
+  <li>Low cost</li>
+  <li>Slower settlement</li>
+</ul>
+
+<h3 id="rtgs">RTGS</h3>
+
+<p>Used for:</p>
+
+<ul>
+  <li>High-value transfers</li>
+  <li>Time-critical payments</li>
+</ul>
+
+<p>Characteristics:</p>
+
+<ul>
+  <li>Real-time</li>
+  <li>Expensive</li>
+  <li>Strong finality</li>
+</ul>
+
+<p>Core banking systems integrate tightly with these networks.</p>
+
+<hr />
+
+<h2 id="9-virtual-accounts-and-shadow-ledgers">9. Virtual Accounts and Shadow Ledgers</h2>
+
+<p><strong>Virtual accounts</strong> are logical accounts mapped to real bank accounts.</p>
+
+<p>Used for:</p>
+
+<ul>
+  <li>Merchant reconciliation</li>
+  <li>Wallets</li>
+  <li>Escrow systems</li>
+</ul>
+
+<p>Engineering pattern:</p>
+
+<ul>
+  <li>Core ledger remains authoritative</li>
+  <li>Virtual ledger handles high-volume activity</li>
+</ul>
+
+<hr />
+
+<h2 id="10-core-banking-vs-fintech-systems">10. Core Banking vs Fintech Systems</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Core Banking</th>
+      <th>Fintech Platform</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Strong consistency</td>
+      <td>Eventual consistency</td>
+    </tr>
+    <tr>
+      <td>Ledger-first</td>
+      <td>Balance-first</td>
+    </tr>
+    <tr>
+      <td>Audit-driven</td>
+      <td>UX-driven</td>
+    </tr>
+    <tr>
+      <td>Slow but correct</td>
+      <td>Fast but layered</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Fintech systems often sit <strong>on top of</strong> core banking systems.</p>
+
+<hr />
+
+<h2 id="11-why-core-banking-knowledge-makes-you-a-better-fintech-engineer">11. Why Core Banking Knowledge Makes You a Better Fintech Engineer</h2>
+
+<p>Understanding core banking helps you:</p>
+
+<ul>
+  <li>Design correct settlement systems</li>
+  <li>Avoid balance mismatches</li>
+  <li>Communicate with banks effectively</li>
+  <li>Build regulator-friendly platforms</li>
+</ul>
+
+<hr />
+
+<h2 id="️-final-thoughts">✔️ Final Thoughts</h2>
+
+<p>Core banking systems are conservative by design — and for good reason. They exist to <strong>protect money, trust, and systemic stability</strong>.</p>
+
+<p>For engineers aiming to grow beyond integrations and APIs, mastering core banking concepts is a major step toward becoming a true <strong>fintech domain expert</strong>.</p>
+
+<hr />
+
+<p>👉 <strong>Next article:</strong> Compliance &amp; Regulation in Fintech</p>
+
+
+<hr />
+
+<hr />
+
+<section class="sibling-list">
+  <h3>Other articles in this section</h3>
+  <ul>
+    
+
+    
+      
+      <li>
+        <a href="/fintech/analytics-kpis.html">
+          Fintech Analytics & KPIs: Measuring What Actually Matters
+        </a>
+      </li>
+    
+      
+      <li>
+        <a href="/fintech/architecture-distributed-systems.html">
+          Fintech Architecture & Distributed Financial Systems: Designing for Money, Scale, and Trust
+        </a>
+      </li>
+    
+      
+      <li>
+        <a href="/fintech/compliance-regulation.html">
+          Compliance & Regulation in Fintech: What Engineers Must Understand
+        </a>
+      </li>
+    
+      
+      <li>
+        <a href="/fintech/financial-products.html">
+          Financial Products & Instruments in Fintech: An Engineer’s Deep Dive
+        </a>
+      </li>
+    
+      
+      <li>
+        <a href="/fintech/fraud-risk.html">
+          Fraud & Risk Engines in Fintech: Designing Systems That Protect Money
+        </a>
+      </li>
+    
+      
+      <li>
+        <a href="/fintech/global-platforms.html">
+          Studying Global Fintech Platforms: Reverse Engineering How the Best Really Work
+        </a>
+      </li>
+    
+      
+      <li>
+        <a href="/fintech/">
+          Fintech Domain Knowledge
+        </a>
+      </li>
+    
+      
+      <li>
+        <a href="/fintech/payment-systems.html">
+          Payment Systems in Fintech
+        </a>
+      </li>
+    
+  </ul>
+</section>
+
+<p>
+  ← <a href="./index.html">Back to section</a>
+</p>
+
+<script src="/assets/js/custom.js"></script>
+
+
+      <footer class="site-footer">
+        
+          <span class="site-footer-owner"><a href="https://github.com/risul3/risul3.github.io">risul3.github.io</a> is maintained by <a href="https://github.com/risul3">risul3</a>.</span>
+        
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a>.</span>
+      </footer>
+    </main>
+  </body>
+</html>

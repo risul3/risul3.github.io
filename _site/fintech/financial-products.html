@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Financial Products &amp; Instruments in Fintech: An Engineer’s Deep Dive | Risul Islam</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Financial Products &amp; Instruments in Fintech: An Engineer’s Deep Dive" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Payment Systems in Fintech" />
+<meta property="og:description" content="Payment Systems in Fintech" />
+<link rel="canonical" href="http://localhost:4000/fintech/financial-products.html" />
+<meta property="og:url" content="http://localhost:4000/fintech/financial-products.html" />
+<meta property="og:site_name" content="Risul Islam" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Financial Products &amp; Instruments in Fintech: An Engineer’s Deep Dive" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Payment Systems in Fintech","headline":"Financial Products &amp; Instruments in Fintech: An Engineer’s Deep Dive","url":"http://localhost:4000/fintech/financial-products.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="preload" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap" as="style" type="text/css" crossorigin>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="/assets/css/style.css?v=43eb351625e6b3a8bb06a1469f8d4b5e941c7172">
+    <!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
+
+<!-- Setup Google Analytics -->
+
+
+
+<!-- You can set your favicon here -->
+<!-- link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" -->
+
+<!-- end custom head snippets -->
+
+  </head>
+  <body>
+    <a id="skip-to-content" href="#content">Skip to the content.</a>
+
+    <header class="page-header" role="banner">
+      <h1 class="project-name">Financial Products & Instruments in Fintech: An Engineer’s Deep Dive</h1>
+      <h2 class="project-tagline">Payment Systems in Fintech</h2>
+      
+        <a href="https://github.com/risul3/risul3.github.io" class="btn">View on GitHub</a>
+      
+      
+    </header>
+
+    <main id="content" class="main-content" role="main">
+      <p>← <a href="index.html">Fintech Home</a></p>
+
+<p><em>Last updated: Dec 2025</em></p>
+
+<hr />
+
+<h2 id="-introduction">🚀 Introduction</h2>
+
+<p>Fintech engineers often build systems around APIs, databases, and workflows, but the <strong>behavior of those systems is ultimately driven by financial products</strong>. Loans, cards, BNPL, remittances, and wallets are not just business concepts — they are <strong>state machines with strict financial rules</strong>.</p>
+
+<p>Engineers who understand financial products deeply make better architectural decisions, anticipate edge cases earlier, and communicate more effectively with product, risk, and compliance teams.</p>
+
+<p>This article explains the most important fintech products and instruments from an <strong>engineering-first perspective</strong>, focusing on how they behave internally rather than how they are marketed.</p>
+
+<hr />
+
+<h2 id="1-what-is-a-financial-product">1. What Is a Financial Product?</h2>
+
+<p><strong>Definition:</strong> A financial product is a structured agreement that defines how money flows, under what conditions, with what risks, and over what time.</p>
+
+<p>From an engineering perspective, every financial product has:</p>
+
+<ul>
+  <li>A lifecycle</li>
+  <li>Rules for money movement</li>
+  <li>Risk exposure</li>
+  <li>Accounting implications</li>
+</ul>
+
+<p>If you can model the lifecycle correctly, the product becomes predictable and auditable.</p>
+
+<hr />
+
+<h2 id="2-deposit-products-savings--current-accounts">2. Deposit Products: Savings &amp; Current Accounts</h2>
+
+<h3 id="savings-accounts">Savings Accounts</h3>
+
+<p>Used for storing money and earning interest.</p>
+
+<p>Engineering characteristics:</p>
+
+<ul>
+  <li>Interest accrual (daily / monthly)</li>
+  <li>Minimum balance rules</li>
+  <li>Withdrawal limits</li>
+  <li>Regulatory reporting</li>
+</ul>
+
+<h3 id="current-checking-accounts">Current (Checking) Accounts</h3>
+
+<p>Used for high-frequency transactions.</p>
+
+<p>Engineering characteristics:</p>
+
+<ul>
+  <li>No or low interest</li>
+  <li>Overdraft support</li>
+  <li>High transaction throughput</li>
+</ul>
+
+<p>In both cases, <strong>ledger accuracy</strong> is non-negotiable.</p>
+
+<hr />
+
+<h2 id="3-cards-debit-credit-and-prepaid">3. Cards: Debit, Credit, and Prepaid</h2>
+
+<p>Cards are interfaces to underlying accounts.</p>
+
+<h3 id="debit-cards">Debit Cards</h3>
+
+<ul>
+  <li>Linked directly to deposits</li>
+  <li>Real-time balance checks</li>
+</ul>
+
+<h3 id="credit-cards">Credit Cards</h3>
+
+<ul>
+  <li>Revolving credit line</li>
+  <li>Statement cycles</li>
+  <li>Interest and late fees</li>
+</ul>
+
+<h3 id="prepaid-cards">Prepaid Cards</h3>
+
+<ul>
+  <li>Stored-value model</li>
+  <li>Often used for wallets</li>
+</ul>
+
+<p>Engineering challenges:</p>
+
+<ul>
+  <li>Authorization vs posting</li>
+  <li>Pending vs settled balances</li>
+  <li>Dispute and chargeback handling</li>
+</ul>
+
+<hr />
+
+<h2 id="4-loans-the-most-complex-product">4. Loans: The Most Complex Product</h2>
+
+<p><strong>Definition:</strong> A loan is an agreement where money is provided upfront and repaid over time with interest.</p>
+
+<p>Loan lifecycle:</p>
+
+<ol>
+  <li>Origination</li>
+  <li>Disbursement</li>
+  <li>Repayment</li>
+  <li>Closure</li>
+</ol>
+
+<h3 id="engineering-complexity">Engineering Complexity</h3>
+
+<ul>
+  <li>Interest calculation models</li>
+  <li>EMI schedules</li>
+  <li>Penalties and grace periods</li>
+  <li>Partial prepayments</li>
+  <li>Restructuring and write-offs</li>
+</ul>
+
+<p>Loans are long-lived state machines.</p>
+
+<hr />
+
+<h2 id="5-buy-now-pay-later-bnpl">5. Buy Now, Pay Later (BNPL)</h2>
+
+<p>BNPL is a short-term installment loan disguised as a checkout feature.</p>
+
+<p>Engineering considerations:</p>
+
+<ul>
+  <li>Instant underwriting</li>
+  <li>Merchant settlement upfront</li>
+  <li>Consumer repayment tracking</li>
+  <li>Default handling</li>
+</ul>
+
+<p>BNPL systems tightly integrate <strong>risk, payments, and collections</strong>.</p>
+
+<hr />
+
+<h2 id="6-installments--emi-conversions">6. Installments &amp; EMI Conversions</h2>
+
+<p>Installments allow transactions to be split into fixed payments.</p>
+
+<p>Engineering requirements:</p>
+
+<ul>
+  <li>Schedule generation</li>
+  <li>Interest or fee distribution</li>
+  <li>Statement alignment</li>
+  <li>Reversal handling</li>
+</ul>
+
+<p>Installments must remain consistent even if original transactions are disputed.</p>
+
+<hr />
+
+<h2 id="7-fx--multi-currency-products">7. FX &amp; Multi-Currency Products</h2>
+
+<p><strong>Definition:</strong> Foreign exchange products convert money between currencies.</p>
+
+<p>Engineering challenges:</p>
+
+<ul>
+  <li>Exchange rate sourcing</li>
+  <li>Rounding rules</li>
+  <li>Spread management</li>
+  <li>Settlement currency mismatches</li>
+</ul>
+
+<p>FX introduces market risk into system design.</p>
+
+<hr />
+
+<h2 id="8-remittance--cross-border-transfers">8. Remittance &amp; Cross-Border Transfers</h2>
+
+<p>Remittance systems move money across countries.</p>
+
+<p>Key characteristics:</p>
+
+<ul>
+  <li>Multi-hop settlement</li>
+  <li>Compliance-heavy flows</li>
+  <li>Time-zone delays</li>
+  <li>FX conversion</li>
+</ul>
+
+<p>Engineering focus:</p>
+
+<ul>
+  <li>Tracking state across hops</li>
+  <li>Reconciliation at each stage</li>
+</ul>
+
+<hr />
+
+<h2 id="9-wallets--stored-value-accounts">9. Wallets &amp; Stored-Value Accounts</h2>
+
+<p>Wallets are fintech-native products.</p>
+
+<p>Engineering traits:</p>
+
+<ul>
+  <li>High transaction volume</li>
+  <li>Internal ledger-based balances</li>
+  <li>Real-time availability</li>
+</ul>
+
+<p>Wallets often use <strong>shadow ledgers</strong> backed by bank accounts.</p>
+
+<hr />
+
+<h2 id="10-treasury--liquidity-management">10. Treasury &amp; Liquidity Management</h2>
+
+<p>Treasury manages where money sits and how it moves.</p>
+
+<p>Engineering implications:</p>
+
+<ul>
+  <li>Funding accounts</li>
+  <li>Settlement forecasting</li>
+  <li>Float management</li>
+  <li>Risk exposure visibility</li>
+</ul>
+
+<p>Poor treasury visibility leads to systemic failure.</p>
+
+<hr />
+
+<h2 id="11-productriskengineering-feedback-loop">11. Product–Risk–Engineering Feedback Loop</h2>
+
+<p>Products cannot be designed in isolation.</p>
+
+<ul>
+  <li>Risk affects approval rules</li>
+  <li>Engineering affects product feasibility</li>
+  <li>Product design affects compliance</li>
+</ul>
+
+<p>Strong fintech teams design products <strong>collaboratively</strong>.</p>
+
+<hr />
+
+<h2 id="️-final-thoughts">✔️ Final Thoughts</h2>
+
+<p>Understanding financial products transforms engineers from implementers into <strong>domain experts</strong>.</p>
+
+<p>Once you understand how products behave financially, system design becomes clearer, safer, and more predictable.</p>
+
+<hr />
+
+<p>👉 <strong>Next article:</strong> Fintech Analytics &amp; KPIs</p>
+
+
+<hr />
+
+<hr />
+
+<section class="sibling-list">
+  <h3>Other articles in this section</h3>
+  <ul>
+    
+
+    
+      
+      <li>
+        <a href="/fintech/analytics-kpis.html">
+          Fintech Analytics & KPIs: Measuring What Actually Matters
+        </a>
+      </li>
+    
+      
+      <li>
+        <a href="/fintech/architecture-distributed-systems.html">
+          Fintech Architecture & Distributed Financial Systems: Designing for Money, Scale, and Trust
+        </a>
+      </li>
+    
+      
+      <li>
+        <a href="/fintech/compliance-regulation.html">
+          Compliance & Regulation in Fintech: What Engineers Must Understand
+        </a>
+      </li>
+    
+      
+      <li>
+        <a href="/fintech/core-banking.html">
+          Core Banking Systems: How Banks Actually Work (An Engineer’s Guide)
+        </a>
+      </li>
+    
+      
+      <li>
+        <a href="/fintech/fraud-risk.html">
+          Fraud & Risk Engines in Fintech: Designing Systems That Protect Money
+        </a>
+      </li>
+    
+      
+      <li>
+        <a href="/fintech/global-platforms.html">
+          Studying Global Fintech Platforms: Reverse Engineering How the Best Really Work
+        </a>
+      </li>
+    
+      
+      <li>
+        <a href="/fintech/">
+          Fintech Domain Knowledge
+        </a>
+      </li>
+    
+      
+      <li>
+        <a href="/fintech/payment-systems.html">
+          Payment Systems in Fintech
+        </a>
+      </li>
+    
+  </ul>
+</section>
+
+<p>
+  ← <a href="./index.html">Back to section</a>
+</p>
+
+<script src="/assets/js/custom.js"></script>
+
+
+      <footer class="site-footer">
+        
+          <span class="site-footer-owner"><a href="https://github.com/risul3/risul3.github.io">risul3.github.io</a> is maintained by <a href="https://github.com/risul3">risul3</a>.</span>
+        
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a>.</span>
+      </footer>
+    </main>
+  </body>
+</html>

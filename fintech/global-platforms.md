@@ -1,6 +1,5 @@
 ---
-layout: article
-title: Studying Global Fintech Platforms: Reverse Engineering How the Best Really Work
+title: "Studying Global Fintech Platforms: Reverse Engineering How the Best Really Work"
 description: Payment Systems in Fintech
 ---
 
