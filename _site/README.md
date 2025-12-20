@@ -1,1 +1,0 @@
-# risul.github.io
