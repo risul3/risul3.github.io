@@ -1,6 +1,6 @@
 ---
 title: "Core Banking Systems: How Banks Actually Work (An Engineer’s Guide)"
-description: Payment Systems in Fintech
+description: "How banks actually work internally — ledgers, double-entry accounting, balances, reversals, interest calculation, RTGS, ACH, and virtual accounts."
 order: 20
 ---
 

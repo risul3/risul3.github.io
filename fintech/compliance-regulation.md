@@ -1,6 +1,6 @@
 ---
 title: "Compliance & Regulation in Fintech: What Engineers Must Understand"
-description: A complete, in-depth guide for engineers and tech leads
+description: "An engineering-centric view of KYC, AML, PCI-DSS, audit trails, access control, and why compliance must be built into system design."
 order: 30
 ---
 

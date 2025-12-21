@@ -1,6 +1,6 @@
 ---
 title: "Financial Products & Instruments in Fintech: An Engineer’s Deep Dive"
-description: Payment Systems in Fintech
+description: "An engineer’s guide to loans, BNPL, installments, cards, FX, remittances, treasury, and liquidity management."
 order: 60
 ---
 

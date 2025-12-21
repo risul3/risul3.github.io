@@ -1,6 +1,6 @@
 ---
 title: Payment Systems in Fintech
-description: A complete, in-depth guide for engineers and tech leads
+description: "A deep, end-to-end explanation of authorization, settlement, card networks, wallets, chargebacks, and operational realities."
 order: 10
 ---
 

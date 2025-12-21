@@ -1,6 +1,6 @@
 ---
 title: "Fraud & Risk Engines in Fintech: Designing Systems That Protect Money"
-description: Payment Systems in Fintech
+description: "A detailed exploration of rule engines, risk scoring, velocity checks, device fingerprinting, ML boundaries, and human-in-the-loop operations."
 order: 40
 ---
 

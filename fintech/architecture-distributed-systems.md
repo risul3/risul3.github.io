@@ -1,6 +1,6 @@
 ---
 title: "Fintech Architecture & Distributed Financial Systems: Designing for Money, Scale, and Trust"
-description: A complete, in-depth guide for engineers and tech leads
+description: "Why fintech architecture is different — ledgers as truth, event-driven systems, idempotency, sagas, reconciliation, and operational safety."
 order: 50
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: "Studying Global Fintech Platforms: Reverse Engineering How the Best Really Work"
-description: Payment Systems in Fintech
+description: "Reverse engineering Stripe, Adyen, PayPal, Wise, Revolut, and M-Pesa to understand why mature fintech systems look the way they do."
 order: 80
 ---
 
