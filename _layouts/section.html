@@ -26,10 +26,6 @@ layout: default
         <a href="{{ p.url }}">{{ p.title }}</a>
       </h3>
 
-      <p class="section-meta">
-        {{ reading_time }} min read
-      </p>
-
       {% if p.description %}
         <p class="section-summary">
           {{ p.description }}
@@ -39,6 +35,10 @@ layout: default
           {{ p.excerpt | strip_html | truncate: 220 }}
         </p>
       {% endif %}
+      <small class="section-meta">
+        {{ reading_time }} min read
+      </small>
+
     </article>
 
     <hr />
