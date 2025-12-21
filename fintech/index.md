@@ -37,7 +37,7 @@ Each article can be revisited independently as a reference.
 
 ---
 
-## 🧭 Final Note
+#### 🧭 Note
 
 This knowledge base is intentionally conservative in tone and design. Financial systems demand **correctness, clarity, and discipline** over novelty.
 
@@ -46,6 +46,4 @@ If you are building or leading fintech systems, these principles will help you a
 ---
 
 ## 📘 Overview
-
----
 
