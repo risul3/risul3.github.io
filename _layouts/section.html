@@ -2,7 +2,21 @@
 layout: default
 ---
 
-{{ content }}
+{% assign section_pages = site.pages
+   | where: "section", page.section
+   | where_exp: "p", "p.url != page.url"
+   | sort: "order" %}
+
+<ul>
+{% for p in section_pages %}
+  {% if p.url contains '/index.html' %}{% continue %}{% endif %}
+  <li>
+    <a href="{{ p.url }}">
+      {{ p.title }}
+    </a>
+  </li>
+{% endfor %}
+</ul>
 
 <hr />
 
