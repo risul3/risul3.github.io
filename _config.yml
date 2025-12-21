@@ -1,6 +1,7 @@
 title: Risul Islam
 description: Personal knowledge base
 theme: jekyll-theme-cayman
+excerpt_separator: "<!--more-->"
 defaults:
   - scope:
       path: "fintech"

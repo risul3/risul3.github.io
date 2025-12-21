@@ -10,3 +10,28 @@
 .sibling-list li {
   margin: 0.4rem 0;
 }
+
+.section-item {
+  margin: 1.5rem 0;
+}
+
+.section-title {
+  margin-bottom: 0.4rem;
+}
+
+.section-summary {
+  color: #555;
+  line-height: 1.6;
+  max-width: 70ch;
+}
+
+.article-meta,
+.section-meta {
+  font-size: 0.9rem;
+  color: #777;
+  margin-top: 0.25rem;
+}
+
+.section-meta::before {
+  content: "⏱ ";
+}

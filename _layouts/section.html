@@ -2,23 +2,48 @@
 layout: default
 ---
 
+{{ content }}
+
+<hr />
+
 {% assign section_pages = site.pages
    | where: "section", page.section
    | where_exp: "p", "p.url != page.url"
    | sort: "order" %}
 
-<ul>
-{% for p in section_pages %}
-  {% if p.url contains '/index.html' %}{% continue %}{% endif %}
-  <li>
-    <a href="{{ p.url }}">
-      {{ p.title }}
-    </a>
-  </li>
-{% endfor %}
-</ul>
+<div class="section-list">
+  {% for p in section_pages %}
+    {% assign words = p.content | strip_html | number_of_words %}
+    {% assign reading_time = words | divided_by: 200 %}
+    {% if reading_time < 1 %}
+      {% assign reading_time = 1 %}
+    {% endif %}
 
-{{ content }}
+    {% if p.url contains '/index.html' %}{% continue %}{% endif %}
+
+    <article class="section-item">
+      <h2 class="section-title">
+        <a href="{{ p.url }}">{{ p.title }}</a>
+      </h2>
+
+      <p class="section-meta">
+        {{ reading_time }} min read
+      </p>
+
+      {% if p.description %}
+        <p class="section-summary">
+          {{ p.description }}
+        </p>
+      {% elsif p.excerpt %}
+        <p class="section-summary">
+          {{ p.excerpt | strip_html | truncate: 220 }}
+        </p>
+      {% endif %}
+    </article>
+
+    <hr />
+  {% endfor %}
+</div>
 
 <hr />
 
