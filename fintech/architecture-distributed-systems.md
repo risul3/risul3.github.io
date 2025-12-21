@@ -1,6 +1,7 @@
 ---
 title: "Fintech Architecture & Distributed Financial Systems: Designing for Money, Scale, and Trust"
 description: A complete, in-depth guide for engineers and tech leads
+order: 50
 ---
 
 ← [Fintech Home](index.html)

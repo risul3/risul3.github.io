@@ -1,6 +1,7 @@
 ---
 title: "Compliance & Regulation in Fintech: What Engineers Must Understand"
 description: A complete, in-depth guide for engineers and tech leads
+order: 30
 ---
 
 ← [Fintech Home](index.html)

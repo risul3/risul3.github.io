@@ -14,7 +14,7 @@ layout: default
     {% assign pages_in_section = site.pages
        | where: "section", page.section
        | where_exp: "p", "p.url != page.url"
-       | sort: "path" %}
+       | sort: "order" %}
 
     {% for p in pages_in_section %}
       {% if p.url contains '/index.html' %}{% continue %}{% endif %}

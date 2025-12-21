@@ -1,6 +1,7 @@
 ---
 title: "Studying Global Fintech Platforms: Reverse Engineering How the Best Really Work"
 description: Payment Systems in Fintech
+order: 80
 ---
 
 ← [Fintech Home](index.html)
