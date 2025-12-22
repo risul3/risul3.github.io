@@ -35,3 +35,30 @@
 .section-meta::before {
   content: "⏱ ";
 }
+
+.root-card {
+  padding: 1rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.root-title {
+  margin-bottom: 0.2rem;
+}
+
+.root-translit {
+  font-size: 0.85rem;
+  color: #777;
+}
+
+.root-meaning {
+  margin: 0.2rem 0;
+}
+
+.root-summary {
+  color: #555;
+  max-width: 70ch;
+}
+
+.root-link {
+  font-size: 0.9rem;
+}

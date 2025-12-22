@@ -1,0 +1,55 @@
+---
+layout: section
+---
+
+{% comment %}
+Generic root index layout.
+Uses:
+- page.root_path (string, required)
+- page.title
+- page.description (optional)
+{% endcomment %}
+
+<header class="section-header">
+  <h1>{{ page.title }}</h1>
+
+  {% if page.description %}
+    <p class="section-intro">
+      {{ page.description }}
+    </p>
+  {% endif %}
+</header>
+
+{% assign roots = site.pages
+  | where_exp: "p", "p.url contains page.root_path"
+  | where_exp: "p", "p.url != page.url"
+  | sort: "order" %}
+
+<div class="root-list">
+  {% for r in roots %}
+    <article class="root-card">
+      <h3 class="root-title">
+        <a href="{{ r.url }}">{{ r.arabic }}</a>
+        {% if r.transliteration %}
+          <span class="root-translit">({{ r.transliteration }})</span>
+        {% endif %}
+      </h3>
+
+      {% if r.meaning %}
+        <p class="root-meaning">
+          <strong>{{ r.meaning }}</strong>
+        </p>
+      {% endif %}
+
+      {% if r.summary %}
+        <p class="root-summary">
+          {{ r.summary }}
+        </p>
+      {% endif %}
+
+      <a class="root-link" href="{{ r.url }}">
+        Read full root →
+      </a>
+    </article>
+  {% endfor %}
+</div>
