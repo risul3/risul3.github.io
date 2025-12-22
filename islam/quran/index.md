@@ -1,5 +1,5 @@
 ---
-layout: base
+layout: default
 title: "Qur’ānic Vocabulary"
 section: islam
 ---
