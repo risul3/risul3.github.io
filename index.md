@@ -1,17 +1,11 @@
 ---
 layout: default
 title: Risul Islam
-description: Software Engineer · Tech Lead · Fintech Systems
----
-
-## 👋 About Me
-
-I am a senior software engineer and tech team lead with experience building large-scale fintech systems, payment platforms, and backend services.  
-This site is my personal knowledge hub — a place to document what I learn and share it with my team and the wider engineering community.
+description: Notes on Personal Study
 
 ---
 
-## 📚 **[Islam](islam/indexhtml)**
+## 📚 **[Islam](islam/index.html)**
 
 Structured islamic content
 
@@ -28,5 +22,12 @@ Long-form, engineering-focused articles on payments, banking systems, fraud, com
 Notes on system design, scalability, architecture, and real-world engineering problems.
 
 _(Coming soon)_
+
+---
+
+## 👋 About Me
+
+I am a senior software engineer and tech team lead with experience building large-scale fintech systems, payment platforms, and backend services.  
+This site is my personal knowledge hub — a place to document what I learn.
 
 ---

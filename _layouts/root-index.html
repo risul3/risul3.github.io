@@ -10,46 +10,50 @@ Uses:
 - page.description (optional)
 {% endcomment %}
 
-<header class="section-header">
-  <h1>{{ page.title }}</h1>
-
-  {% if page.description %}
-    <p class="section-intro">
-      {{ page.description }}
-    </p>
-  {% endif %}
-</header>
+<!-- <header class="section-header">
+  <h2>{{ page.title }}</h2>
+</header> -->
 
 {% assign roots = site.pages
   | where_exp: "p", "p.url contains page.root_path"
   | where_exp: "p", "p.url != page.url"
-  | sort: "order" %}
+  | sort: "frequency_count"
+  | reverse %}
 
-<div class="root-list">
-  {% for r in roots %}
-    <article class="root-card">
-      <h3 class="root-title">
-        <a href="{{ r.url }}">{{ r.arabic }}</a>
-        {% if r.transliteration %}
-          <span class="root-translit">({{ r.transliteration }})</span>
-        {% endif %}
-      </h3>
+<table class="root-table">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Verb</th>
+      <th>Root</th>
+      <th>Form</th>
+      <th>Frequency</th>
+      <th>Translation</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for r in roots %}
+      <tr>
+        <td>{{ forloop.index }}</td>
 
-      {% if r.meaning %}
-        <p class="root-meaning">
-          <strong>{{ r.meaning }}</strong>
-        </p>
-      {% endif %}
+        <td class="arabic">
+          <a href="{{ r.url }}">{{ r.arabic_verb }}</a>
+        </td>
 
-      {% if r.summary %}
-        <p class="root-summary">
-          {{ r.summary }}
-        </p>
-      {% endif %}
+        <td class="arabic">
+          {{ r.arabic_root }}
+        </td>
 
-      <a class="root-link" href="{{ r.url }}">
-        Read full root →
-      </a>
-    </article>
-  {% endfor %}
+        <td>{{ r.form }}</td>
+
+        <td>{{ r.frequency_count }}</td>
+
+        <td>
+          <a href="https://corpus.quran.com/search.jsp?q=pos%3Av+%28I%29+root%3Aqwl" target="_blank" rel="noopener noreferrer">
+            {{ r.meaning }}</a>
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
 </div>

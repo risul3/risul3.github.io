@@ -1,12 +1,9 @@
 ---
 layout: default
 title: "Qur’ānic Vocabulary"
+description: "Understanding the Qur’an through root-based vocabulary study."
 section: islam
 ---
-
-## Qur’ānic Vocabulary
-
-This section focuses on understanding the Qur’an through root-based vocabulary study.
 
 ### Categories
 - [High-Frequency Roots](/islam/quran/vocabulary/high-frequency/)

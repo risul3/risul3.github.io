@@ -42,7 +42,7 @@
 }
 
 .root-title {
-  margin-bottom: 0.2rem;
+  /* margin-bottom: 0.2rem; */
 }
 
 .root-translit {
@@ -51,14 +51,43 @@
 }
 
 .root-meaning {
-  margin: 0.2rem 0;
+  /* margin: 0.2rem 0; */
 }
 
 .root-summary {
   color: #555;
-  max-width: 70ch;
 }
 
 .root-link {
-  font-size: 0.9rem;
+  font-size: 0.3rem;
+}
+
+.root-number {
+  font-weight: 600;
+  margin-right: 0.4rem;
+  color: #666;
+}
+
+.root-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1.5rem;
+}
+
+.root-table th {
+  background: #eef6dc;
+  text-align: left;
+  padding: 0.6rem;
+  font-weight: 600;
+}
+
+.root-table td {
+  padding: 0.6rem;
+  border-bottom: 1px dashed #ccc;
+}
+
+.root-table .arabic {
+  font-family: "Scheherazade New", "Amiri", serif;
+  font-size: 1.2rem;
+  direction: rtl;
 }
