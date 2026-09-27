@@ -53,8 +53,8 @@ canvas#lcd{display:block; width:100%; aspect-ratio:262/292; background:var(--lcd
 .brand{display:flex; align-items:baseline; justify-content:space-between; margin:14px 4px 8px}
 .brand .b1{font-family:"Russo One","Arial Black",sans-serif; font-size:clamp(22px,7vw,28px); color:var(--print-blue); letter-spacing:.02em; line-height:1}
 .brand .b2{font-family:"Chakra Petch",sans-serif; font-style:italic; font-weight:700; font-size:clamp(15px,4.6vw,18px); color:var(--print-red)}
-.gamelist{list-style:none; margin:0 0 16px; padding:0; display:grid; grid-template-columns:repeat(3,1fr); gap:3px 6px; font-size:12px; font-weight:600; color:var(--print-ink)}
-.gamelist li{padding:2px 6px; border-radius:4px; white-space:nowrap}
+.gamelist{list-style:none; margin:0 0 16px; padding:0; display:grid; grid-template-columns:repeat(4,1fr); gap:3px 4px; font-size:clamp(10.5px,3vw,12px); font-weight:600; color:var(--print-ink)}
+.gamelist li{padding:2px 4px; border-radius:4px; white-space:nowrap}
 .gamelist li b{font-family:"Russo One",sans-serif; font-weight:400; margin-right:4px}
 .gamelist li.on{background:var(--print-blue); color:var(--shell-hi)}
 .pills{display:flex; justify-content:space-between; padding:0 6px; margin-bottom:18px}
@@ -88,8 +88,9 @@ button:focus-visible{outline:3px solid var(--print-blue); outline-offset:3px}
   </div>
   <div class="brand"><span class="b1">BRICK GAME</span><span class="b2">9999 in 1</span></div>
   <ul class="gamelist" id="gamelist">
-    <li><b>A</b>Blocks</li><li><b>B</b>Racing</li><li><b>C</b>Snake</li>
-    <li><b>D</b>Tank</li><li><b>E</b>Shooter</li><li><b>F</b>Breaker</li>
+    <li><b>A</b>Blocks</li><li><b>B</b>Racing</li><li><b>C</b>Snake</li><li><b>D</b>Tank</li>
+    <li><b>E</b>Shooter</li><li><b>F</b>Breaker</li><li><b>G</b>Filler</li><li><b>H</b>Frog</li>
+    <li><b>I</b>Tennis</li><li><b>J</b>Jump</li>
   </ul>
   <div class="pills">
     <div class="pill-wrap"><button class="pill" data-act="power" aria-label="On or off"></button>On/Off</div>
@@ -111,7 +112,7 @@ button:focus-visible{outline:3px solid var(--print-blue); outline-offset:3px}
 
 <div class="help">
   <p>On the menu, <kbd>←</kbd> <kbd>→</kbd> picks a game, <kbd>↑</kbd> <kbd>↓</kbd> sets the speed, <kbd>Space</kbd> sets the starting level, and <kbd>Enter</kbd> starts.</p>
-  <p>While playing, arrows move, <kbd>Space</kbd> rotates or fires, <kbd>Enter</kbd> pauses, <kbd>M</kbd> toggles sound and <kbd>R</kbd> resets. Hold ↑ in Racing or keep pressing your direction in Snake to go faster.</p>
+  <p>While playing, arrows move, <kbd>Space</kbd> rotates or fires, <kbd>Enter</kbd> pauses, <kbd>M</kbd> toggles sound and <kbd>R</kbd> resets. Hold ↑ in Racing or hold your direction in Snake to go faster. In Filler, each shot adds a brick to plug a gap, and full rows clear.</p>
 </div>
 
 <script>
@@ -449,8 +450,8 @@ const Shooter = {
     return false;
   },
   input(a) {
-    if (a === 'left' && this.x > 1) this.x--;
-    else if (a === 'right' && this.x < W - 2) this.x++;
+    if (a === 'left' && this.x > 0) this.x--;
+    else if (a === 'right' && this.x < W - 1) this.x++;
     else if ((a === 'rotate' || a === 'up') && this.bul.length < 3) {
       const b = { x: this.x, y: 17 }; sfx.fire(); if (!this.hitCheck(b)) this.bul.push(b);
     }
@@ -515,8 +516,203 @@ const Breaker = {
   }
 };
 
-const GAMES = [Blocks, Racing, Snake, Tank, Shooter, Breaker];
-const LETTERS = ['A', 'B', 'C', 'D', 'E', 'F'];
+
+/* ---------- G: Filler ---------- */
+const Filler = {
+  repeat: { left: 60, right: 60 },
+  start() {
+    this.lives = null; this.b = new Uint8Array(W * H);
+    const rows = Math.min(3 + app.level, 11);
+    for (let y = 0; y < rows; y++) this.fillRow(y);
+    this.x = 4; this.bul = null; this.dacc = 0; this.bacc = 0; this.rows = 0;
+  },
+  fillRow(y) {
+    for (let x = 0; x < W; x++) this.b[y * W + x] = 1;
+    const gaps = 1 + rnd(3); for (let i = 0; i < gaps; i++) this.b[y * W + rnd(W)] = 0;
+  },
+  update(dt) {
+    this.dacc += dt;
+    if (this.dacc >= spd(app.speed) * 9) {
+      this.dacc = 0; this.b.copyWithin(W, 0, (H - 1) * W); this.fillRow(0);
+      for (let i = 17 * W; i < W * H; i++) if (this.b[i]) { gameOver(); return; }
+    }
+    this.bacc += dt;
+    while (this.bul && this.bacc >= 28) {
+      this.bacc -= 28; const b = this.bul;
+      if (b.y === 0 || this.b[(b.y - 1) * W + b.x]) { this.place(b.x, b.y); this.bul = null; }
+      else b.y--;
+    }
+  },
+  place(x, y) {
+    this.b[y * W + x] = 1; tone(900, 0.03);
+    let full = true; for (let i = 0; i < W; i++) if (!this.b[y * W + i]) { full = false; break; }
+    if (full) {
+      this.b.copyWithin(y * W, (y + 1) * W); this.b.fill(0, (H - 1) * W);
+      app.score += 100; this.rows++; sfx.line();
+      if (this.rows % 10 === 0) speedUp();
+    }
+  },
+  input(a) {
+    if (a === 'left' && this.x > 0) this.x--;
+    else if (a === 'right' && this.x < W - 1) this.x++;
+    else if ((a === 'rotate' || a === 'up') && !this.bul) {
+      if (this.b[16 * W + this.x]) { this.place(this.x, 17); return; }
+      this.bul = { x: this.x, y: 17 }; this.bacc = 0; sfx.fire();
+    }
+  },
+  draw() {
+    for (let i = 0; i < W * H; i++) if (this.b[i]) set(i % W, Math.floor(i / W));
+    if (this.bul) set(this.bul.x, this.bul.y);
+    set(this.x, 18); set(this.x - 1, 19); set(this.x, 19); set(this.x + 1, 19);
+  }
+};
+
+/* ---------- H: Frog ---------- */
+const FROG_SLOTS = [1, 4, 8];
+const LANE_PACE = [0.5, 0.8, 0.6, 1.0, 0.45, 0.9, 0.7, 0.55];
+const Frog = {
+  repeat: { left: 140, right: 140, up: 140, down: 140 },
+  start() { this.lives = 4; this.filled = []; this.build(); this.reset(); },
+  build() {
+    this.lanes = [];
+    for (let i = 0; i < 8; i++) {
+      const cells = new Uint8Array(W); let pos = rnd(3);
+      const maxLen = 2 + (app.level > 4 ? 1 : 0);
+      while (pos < W - 1) {
+        const len = 1 + rnd(maxLen);
+        for (let k = 0; k < len && pos + k < W - 1; k++) cells[pos + k] = 1;
+        pos += len + 3 + rnd(3);
+      }
+      this.lanes.push({ y: 2 + i * 2, dir: i % 2 ? 1 : -1, pace: LANE_PACE[i], acc: rnd(300), cells });
+    }
+  },
+  reset() { this.fx = 4; this.fy = 19; },
+  onLane(x, y) { const l = this.lanes.find(l => l.y === y); return !!(l && l.cells[x]); },
+  check() { if (this.onLane(this.fx, this.fy)) loseLife(this, () => this.reset()); },
+  update(dt) {
+    for (const l of this.lanes) {
+      l.acc += dt; const iv = spd(app.speed) * l.pace;
+      while (l.acc >= iv) {
+        l.acc -= iv;
+        if (l.dir > 0) { const last = l.cells[W - 1]; l.cells.copyWithin(1, 0, W - 1); l.cells[0] = last; }
+        else { const first = l.cells[0]; l.cells.copyWithin(0, 1); l.cells[W - 1] = first; }
+      }
+    }
+    this.check();
+  },
+  input(a) {
+    if (this.dying || !DIRS[a]) return;
+    const [dx, dy] = DIRS[a], nx = this.fx + dx, ny = this.fy + dy;
+    if (nx < 0 || nx >= W || ny > H - 1) return;
+    if (ny === 0) {
+      if (!FROG_SLOTS.includes(nx) || this.filled.includes(nx)) return;
+      this.filled.push(nx); app.score += 50; sfx.eat();
+      if (this.filled.length === FROG_SLOTS.length) { this.filled = []; app.score += 200; speedUp(); sfx.line(); }
+      this.reset(); return;
+    }
+    this.fx = nx; this.fy = ny; this.check();
+  },
+  draw() {
+    for (let x = 0; x < W; x++) if (!FROG_SLOTS.includes(x) || this.filled.includes(x)) set(x, 0);
+    for (const l of this.lanes) for (let x = 0; x < W; x++) if (l.cells[x]) set(x, l.y);
+    const show = this.dying ? blink() : (now % 500 < 380);
+    if (show) set(this.fx, this.fy);
+  }
+};
+
+/* ---------- I: Tennis ---------- */
+const Tennis = {
+  repeat: { left: 55, right: 55 },
+  start() { this.lives = 4; this.points = 0; this.reset(); },
+  reset() {
+    this.px = 3; this.cx = 3; this.acc = 0; this.cacc = 0; this.err = 0; this.serveT = 700;
+    this.ball = { x: 4 + rnd(2), y: 9, dx: Math.random() < 0.5 ? -1 : 1, dy: 1 };
+  },
+  update(dt) {
+    if (this.serveT > 0) { this.serveT -= dt; return; }
+    const iv = spd(app.speed) * 0.45;
+    this.cacc += dt; const civ = iv * Math.max(1.15, 2.4 - 0.12 * app.level);
+    while (this.cacc >= civ) {
+      this.cacc -= civ;
+      const target = Math.max(0, Math.min(W - 3, (this.ball.dy < 0 ? this.ball.x - 1 + this.err : 3)));
+      if (this.cx < target) this.cx++; else if (this.cx > target) this.cx--;
+    }
+    this.acc += dt;
+    while (this.acc >= iv && !this.dying && this.serveT <= 0) { this.acc -= iv; this.step(); }
+  },
+  step() {
+    const bl = this.ball; let { x, y, dx, dy } = bl;
+    if (x + dx < 0 || x + dx >= W) dx = -dx;
+    const nx = x + dx;
+    if (dy > 0 && y + dy === 19 && nx >= this.px && nx <= this.px + 2) {
+      dy = -1; if (nx === this.px) dx = -1; else if (nx === this.px + 2) dx = 1;
+      this.err = rnd(5) - 2; tone(1100, 0.03);
+    } else if (dy < 0 && y + dy === 0 && nx >= this.cx && nx <= this.cx + 2) {
+      dy = 1; if (nx === this.cx) dx = -1; else if (nx === this.cx + 2) dx = 1;
+      tone(800, 0.03);
+    }
+    if (x + dx < 0 || x + dx >= W) dx = -dx;
+    if (y + dy > 19) { loseLife(this, () => this.reset()); return; }
+    if (y + dy < 0) {
+      app.score += 100; this.points++; sfx.line();
+      if (this.points % 5 === 0) speedUp();
+      this.reset(); return;
+    }
+    Object.assign(bl, { x: x + dx, y: y + dy, dx, dy });
+  },
+  input(a) {
+    if (this.dying) return;
+    if (a === 'left' && this.px > 0) this.px--;
+    else if (a === 'right' && this.px < W - 3) this.px++;
+  },
+  draw() {
+    for (let i = 0; i < 3; i++) set(this.cx + i, 0);
+    if (!this.dying || blink()) { for (let i = 0; i < 3; i++) set(this.px + i, 19); }
+    if (this.serveT <= 0 || blink(150)) set(this.ball.x, this.ball.y);
+  }
+};
+
+/* ---------- J: Jump ---------- */
+const JUMP = [1, 2, 3, 4, 4, 3, 2, 1];
+const Jump = {
+  repeat: {},
+  start() { this.lives = 4; this.passed = 0; this.reset(); },
+  reset() { this.obs = []; this.j = -1; this.acc = 0; this.gap = 4; this.off = 0; },
+  lift() { return this.j >= 0 ? JUMP[this.j] : 0; },
+  hitNow() {
+    const top = 17 - this.lift(), bot = 18 - this.lift();
+    return this.obs.some(o => o.x === 2 && (bot >= 19 - o.h && top <= 18));
+  },
+  update(dt) {
+    this.acc += dt; const iv = spd(app.speed) * 0.55;
+    while (this.acc >= iv && !this.dying) {
+      this.acc -= iv; this.off = (this.off + 1) % 5;
+      if (this.j >= 0) { this.j++; if (this.j >= JUMP.length) this.j = -1; }
+      for (const o of this.obs) o.x--;
+      while (this.obs.length && this.obs[0].x < 0) {
+        this.obs.shift(); app.score += 10; this.passed++;
+        if (this.passed % 15 === 0) speedUp();
+      }
+      if (--this.gap <= 0) {
+        this.obs.push({ x: W - 1, h: app.level > 2 && Math.random() < 0.5 ? 2 : 1 });
+        this.gap = 8 + rnd(Math.max(2, 6 - Math.floor(app.level / 3)));
+      }
+      if (this.hitNow()) loseLife(this, () => this.reset());
+    }
+  },
+  input(a) {
+    if (this.dying) return;
+    if ((a === 'up' || a === 'rotate') && this.j < 0) { this.j = 0; tone(1600, 0.04); }
+  },
+  draw() {
+    for (let x = 0; x < W; x++) if ((x + this.off) % 5 !== 0) set(x, 19);
+    for (const o of this.obs) for (let k = 0; k < o.h; k++) set(o.x, 18 - k);
+    if (!this.dying || blink()) { const L = this.lift(); set(2, 17 - L); set(2, 18 - L); set(1, 18 - L); set(3, 18 - L); }
+  }
+};
+
+const GAMES = [Blocks, Racing, Snake, Tank, Shooter, Breaker, Filler, Frog, Tennis, Jump];
+const LETTERS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
 
 /* ---------- menu art ---------- */
 const GLYPHS = {
@@ -525,7 +721,11 @@ const GLYPHS = {
   C: ['.XXX.','X...X','X....','X....','X....','X...X','.XXX.'],
   D: ['XXXX.','X...X','X...X','X...X','X...X','X...X','XXXX.'],
   E: ['XXXXX','X....','X....','XXXX.','X....','X....','XXXXX'],
-  F: ['XXXXX','X....','X....','XXXX.','X....','X....','X....']
+  F: ['XXXXX','X....','X....','XXXX.','X....','X....','X....'],
+  G: ['.XXX.','X...X','X....','X.XXX','X...X','X...X','.XXX.'],
+  H: ['X...X','X...X','X...X','XXXXX','X...X','X...X','X...X'],
+  I: ['.XXX.','..X..','..X..','..X..','..X..','..X..','.XXX.'],
+  J: ['..XXX','...X.','...X.','...X.','...X.','X..X.','.XX..']
 };
 const ICONS = [
   ['..........','....XX....','....X.....','....X.....','..........','X.......XX','XX.X..XXXX','XXXX.XXXXX','XXXXXXXX.X'],
@@ -533,7 +733,11 @@ const ICONS = [
   ['..........','..XXXX....','..X..X....','..X..X..X.','..X..X....','..X..XXX..','..X....X..','..XXXXXX..','..........'],
   ['..........','.X........','XXX.......','X.X.......','....X.....','..........','....X.....','...XXX....','...X.X....'],
   ['XXXX.XXXXX','XX.XXXX.XX','X.XXX.XXX.','..........','....X.....','..........','..........','....X.....','...XXX....'],
-  ['XXXXXXXXXX','XXX.XXXXXX','X.XX..XXX.','..........','......X...','..........','....X.....','..........','...XXX....']
+  ['XXXXXXXXXX','XXX.XXXXXX','X.XX..XXX.','..........','......X...','..........','....X.....','..........','...XXX....'],
+  ['XXXX.XXXXX','XXXXXX.XXX','XX.XXXXXXX','...X......','..........','...X......','..........','...X......','..XXX.....'],
+  ['XX.XXX.XXX','..........','.XX....XX.','..........','...XXX...X','..........','XX....XX..','..........','....X.....'],
+  ['...XXX....','..........','..........','......X...','..........','....X.....','..........','..........','....XXX...'],
+  ['..........','..........','..X.......','.XXX......','..X.......','..........','.......X..','.......X.X','XXXX.XXXXX']
 ];
 const SPIRAL = (() => {
   const out = []; let l = 0, r = W - 1, t = 0, b = H - 1;
@@ -560,8 +764,8 @@ function togglePower() {
   updateList();
 }
 function menuInput(a) {
-  if (a === 'left') app.gameIdx = (app.gameIdx + 5) % 6;
-  else if (a === 'right') app.gameIdx = (app.gameIdx + 1) % 6;
+  if (a === 'left') app.gameIdx = (app.gameIdx + GAMES.length - 1) % GAMES.length;
+  else if (a === 'right') app.gameIdx = (app.gameIdx + 1) % GAMES.length;
   else if (a === 'up') app.menuSpeed = app.menuSpeed % 10 + 1;
   else if (a === 'down') app.menuSpeed = (app.menuSpeed + 8) % 10 + 1;
   else if (a === 'rotate') app.menuLevel = app.menuLevel % 10 + 1;
@@ -696,7 +900,7 @@ function render() {
   label(inMenu ? 'HI-SCORE' : 'SCORE', SX, 18);
   number(SX, 24, inMenu ? (hi[LETTERS[app.gameIdx]] || 0) : app.score, 6);
 
-  label(app.mode === 'play' && G() === Blocks ? 'NEXT' : 'LIVES', SX, 66);
+  label(inMenu ? '' : G() === Blocks ? 'NEXT' : G().lives != null ? 'LIVES' : '', SX, 66);
   const pc = 13;
   for (let y = 0; y < 4; y++) for (let x = 0; x < 4; x++) brick(SX + x * pc, 72 + y * pc, pc, inMenu ? 0 : prev[y * 4 + x]);
 
